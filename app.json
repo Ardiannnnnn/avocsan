@@ -1,18 +1,62 @@
 {
-  "scheme": "acme",
-  "userInterfaceStyle": "automatic",
-  "orientation": "default",
-  "web": {
-    "output": "static"
-  },
-  "plugins": [
-    [
-      "expo-router",
-      {
-        "origin": "https://n"
+  "expo": {
+    "name": "avocado",
+    "slug": "avocado",
+    "version": "1.0.0",
+    "scheme": "acme",
+    "userInterfaceStyle": "automatic",
+    "orientation": "default",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ardi_expo.avocado",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Camera access for avocado scanning"
       }
-    ]
-  ],
-  "name": "avocado",
-  "slug": "avocado"
+    },
+    "android": {
+      "package": "com.ardi_expo.avocado",
+      "minSdkVersion": 26,
+      "permissions": [
+        "android.permission.CAMERA"
+      ]
+    },
+    "web": {
+      "output": "static",
+      "bundler": "metro"
+    },
+    "assetBundlePatterns": [
+      "**/*",
+      "assets/**/*",
+      "assets/models/*"
+    ],
+    "plugins": [
+      [
+        "expo-router",
+        {
+          "origin": "https://n"
+        }
+      ],
+      [
+        "react-native-vision-camera",
+        {
+          "cameraPermissionText": "Camera access for avocado scanning",
+          "enableMicrophonePermission": false,
+          "enableCodeScanner": false,
+          "enableFrameProcessors": true
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 26
+          }
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
 }

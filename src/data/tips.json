@@ -1,0 +1,86 @@
+{
+  "avocadoTips": [
+    {
+      "icon": "leaf",
+      "text": "Alpukat mentah bisa matang dalam 2-5 hari di suhu ruang"
+    },
+    {
+      "icon": "snow",
+      "text": "Simpan alpukat matang di kulkas untuk memperpanjang kesegaran hingga 3 hari"
+    },
+    {
+      "icon": "restaurant",
+      "text": "Alpukat kaya akan lemak sehat omega-3 yang baik untuk jantung"
+    },
+    {
+      "icon": "fitness",
+      "text": "Satu buah alpukat mengandung lebih banyak kalium daripada pisang"
+    },
+    {
+      "icon": "water",
+      "text": "Teteskan air lemon pada alpukat yang dipotong untuk mencegah oksidasi"
+    },
+    {
+      "icon": "time",
+      "text": "Alpukat matang sempurna ketika sedikit empuk saat ditekan"
+    },
+    {
+      "icon": "nutrition",
+      "text": "Alpukat mengandung 20 vitamin dan mineral esensial"
+    },
+    {
+      "icon": "heart",
+      "text": "Konsumsi alpukat rutin dapat menurunkan kolesterol jahat (LDL)"
+    },
+    {
+      "icon": "sunny",
+      "text": "Simpan alpukat bersama apel atau pisang untuk mempercepat pematangan"
+    },
+    {
+      "icon": "eye",
+      "text": "Lutein dalam alpukat melindungi kesehatan mata dari kerusakan"
+    }
+  ],
+  "mlTips": [
+    {
+      "icon": "scan",
+      "text": "AI kami dilatih dengan 10,000+ gambar alpukat untuk akurasi tinggi"
+    },
+    {
+      "icon": "flash",
+      "text": "Model YOLO11 dapat mendeteksi objek dalam waktu kurang dari 50ms"
+    },
+    {
+      "icon": "hardware-chip",
+      "text": "TensorFlow Lite memungkinkan AI berjalan langsung di smartphone Anda"
+    },
+    {
+      "icon": "analytics",
+      "text": "Machine learning menganalisis warna, tekstur, dan bentuk untuk deteksi"
+    },
+    {
+      "icon": "bulb",
+      "text": "Neural network memiliki akurasi deteksi hingga 95% untuk kematangan alpukat"
+    },
+    {
+      "icon": "git-network",
+      "text": "Deep learning memproses gambar melalui 50+ layer neural network"
+    },
+    {
+      "icon": "shield-checkmark",
+      "text": "Model AI divalidasi dengan cross-validation untuk memastikan konsistensi"
+    },
+    {
+      "icon": "speedometer",
+      "text": "Inferensi real-time dioptimalkan untuk performa 60 FPS di kamera"
+    },
+    {
+      "icon": "cube",
+      "text": "Object detection menggunakan bounding box untuk lokalisasi presisi tinggi"
+    },
+    {
+      "icon": "code-working",
+      "text": "AI kami terus belajar dan berkembang dengan setiap gambar baru"
+    }
+  ]
+}

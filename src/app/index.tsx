@@ -1,95 +1,187 @@
-import { Link } from "expo-router";
-import React from "react";
-import { Text, View } from "react-native";
+import { View, Text, TouchableOpacity, Dimensions, Image, Animated } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useState, useEffect, useRef } from "react";
+import tipsData from "../data/tips.json";
 
-export default function Page() {
-  return (
-    <View className="flex flex-1">
-      <Header />
-      <Content />
-      <Footer />
-    </View>
-  );
-}
+const { width } = Dimensions.get("window");
+const isSmallDevice = width < 375;
+const isTablet = width >= 768;
 
-function Content() {
+type Tip = {
+  icon: string;
+  text: string;
+};
+
+export default function SplashScreen() {
+  const router = useRouter();
+  const insets = useSafeAreaInsets();
+  const [displayedTips, setDisplayedTips] = useState<Tip[]>([]);
+  
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(30)).current;
+
+  const getRandomTips = () => {
+    const allTips = [...tipsData.avocadoTips, ...tipsData.mlTips];
+    const shuffled = allTips.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 3);
+  };
+
+  useEffect(() => {
+    setDisplayedTips(getRandomTips());
+    
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: true,
+      }),
+      Animated.spring(slideAnim, {
+        toValue: 0,
+        friction: 8,
+        tension: 40,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, []);
+
+  const handleGetStarted = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      router.replace("/(tabs)");
+    });
+  };
+
   return (
-    <View className="flex-1">
-      <View className="py-12 md:py-24 lg:py-32 xl:py-48">
-        <View className="px-4 md:px-6">
-          <View className="flex flex-col items-center gap-4 text-center">
-            <Text
-              role="heading"
-              className="text-3xl text-center native:text-5xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl"
+    <LinearGradient colors={["#10b981", "#059669", "#047857"]} style={{ flex: 1 }}>
+      <Animated.View
+        style={{
+          flex: 1,
+          opacity: fadeAnim,
+          transform: [{ translateY: slideAnim }],
+        }}
+      >
+        {/* ...rest of your splash content... */}
+        <View
+          style={{
+            flex: 1,
+            paddingTop: insets.top + (isSmallDevice ? 40 : 60),
+            paddingBottom: insets.bottom + 40,
+            paddingHorizontal: isTablet ? 80 : 32,
+          }}
+        >
+          <View className="flex-1 items-center justify-center">
+            <View
+              className="bg-white rounded-3xl items-center justify-center mb-8 shadow-2xl"
+              style={{
+                width: isSmallDevice ? 120 : isTablet ? 200 : 150,
+                height: isSmallDevice ? 120 : isTablet ? 200 : 150,
+                padding: isSmallDevice ? 20 : 30,
+              }}
             >
-              Welcome to Project ACME
-            </Text>
-            <Text className="mx-auto max-w-[700px] text-lg text-center text-gray-500 md:text-xl dark:text-gray-400">
-              Discover and collaborate on acme. Explore our services now.
+              <Image
+                source={require("../assets/logosuk.png")}
+                style={{ width: "100%", height: "100%", resizeMode: "contain" }}
+              />
+            </View>
+
+            <Text
+              className="text-white font-bold text-center mb-3"
+              style={{ fontSize: isSmallDevice ? 28 : isTablet ? 44 : 36 }}
+            >
+              Avocado Scanner
             </Text>
 
-            <View className="gap-4">
-              <Link
-                suppressHighlighting
-                className="flex h-9 items-center justify-center overflow-hidden rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 web:shadow ios:shadow transition-colors hover:bg-gray-900/90 active:bg-gray-400/90 web:focus-visible:outline-none web:focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-                href="/"
+            <View className="bg-white/20 px-6 py-3 rounded-full mb-2">
+              <Text
+                className="text-white font-semibold text-center"
+                style={{ fontSize: isSmallDevice ? 14 : isTablet ? 20 : 16 }}
               >
-                Explore
-              </Link>
+                Master of Kecerdasan
+              </Text>
             </View>
+
+            <Text
+              className="text-green-100 text-center"
+              style={{
+                fontSize: isSmallDevice ? 12 : isTablet ? 18 : 14,
+                maxWidth: isTablet ? 500 : 280,
+              }}
+            >
+              Inovasi Kecerdasan Buatan
+            </Text>
+          </View>
+
+          <View className="mb-8" style={{ maxWidth: isTablet ? 600 : undefined, alignSelf: "center", width: "100%" }}>
+            <View className="flex-row items-center justify-center mb-4">
+              <Ionicons name="bulb" size={20} color="white" />
+              <Text className="text-white font-semibold ml-2" style={{ fontSize: isSmallDevice ? 14 : 16 }}>
+                Tips Hari Ini
+              </Text>
+            </View>
+
+            {displayedTips.map((tip, index) => (
+              <View key={index} className="flex-row items-center mb-4">
+                <View className="bg-white/30 rounded-full p-2 mr-3">
+                  <Ionicons name={tip.icon as any} size={isSmallDevice ? 20 : 24} color="white" />
+                </View>
+                <Text className="text-white flex-1" style={{ fontSize: isSmallDevice ? 13 : 15 }}>
+                  {tip.text}
+                </Text>
+              </View>
+            ))}
+
+            <TouchableOpacity
+              className="bg-white/20 rounded-full py-2 px-4 mt-2 self-center"
+              activeOpacity={0.7}
+              onPress={() => setDisplayedTips(getRandomTips())}
+            >
+              <View className="flex-row items-center">
+                <Ionicons name="refresh" size={16} color="white" />
+                <Text className="text-white font-semibold ml-2" style={{ fontSize: isSmallDevice ? 11 : 13 }}>
+                  Tips Lainnya
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity
+            className="bg-white rounded-full shadow-2xl"
+            style={{
+              paddingVertical: isSmallDevice ? 16 : 20,
+              maxWidth: isTablet ? 500 : undefined,
+              alignSelf: "center",
+              width: "100%",
+            }}
+            activeOpacity={0.8}
+            onPress={handleGetStarted}
+          >
+            <View className="flex-row items-center justify-center">
+              <Text
+                className="text-green-700 font-bold mr-2"
+                style={{ fontSize: isSmallDevice ? 16 : isTablet ? 22 : 18 }}
+              >
+                Mulai Sekarang
+              </Text>
+              <Ionicons name="arrow-forward" size={isSmallDevice ? 20 : 24} color="#047857" />
+            </View>
+          </TouchableOpacity>
+
+          <View className="items-center mt-6">
+            <Text className="text-white/70 text-center" style={{ fontSize: isSmallDevice ? 10 : 12 }}>
+              Universitas Syiah Kuala
+            </Text>
+            <Text className="text-white/70 text-center mt-1" style={{ fontSize: isSmallDevice ? 10 : 12 }}>
+              Fakultas Teknik • Informatika
+            </Text>
           </View>
         </View>
-      </View>
-    </View>
-  );
-}
-
-function Header() {
-  const { top } = useSafeAreaInsets();
-  return (
-    <View style={{ paddingTop: top }}>
-      <View className="px-4 lg:px-6 h-14 flex items-center flex-row justify-between ">
-        <Link className="font-bold flex-1 items-center justify-center" href="/">
-          ACME
-        </Link>
-        <View className="flex flex-row gap-4 sm:gap-6">
-          <Link
-            className="text-md font-medium hover:underline web:underline-offset-4"
-            href="/"
-          >
-            About
-          </Link>
-          <Link
-            className="text-md font-medium hover:underline web:underline-offset-4"
-            href="/"
-          >
-            Product
-          </Link>
-          <Link
-            className="text-md font-medium hover:underline web:underline-offset-4"
-            href="/"
-          >
-            Pricing
-          </Link>
-        </View>
-      </View>
-    </View>
-  );
-}
-
-function Footer() {
-  const { bottom } = useSafeAreaInsets();
-  return (
-    <View
-      className="flex shrink-0 bg-gray-100 native:hidden"
-      style={{ paddingBottom: bottom }}
-    >
-      <View className="py-6 flex-1 items-start px-4 md:px-6 ">
-        <Text className={"text-center text-gray-700"}>
-          © {new Date().getFullYear()} Me
-        </Text>
-      </View>
-    </View>
+      </Animated.View>
+    </LinearGradient>
   );
 }

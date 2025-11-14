@@ -1,0 +1,131 @@
+{
+  "faqs": [
+    {
+      "id": 1,
+      "question": "Tahukah kamu alpukat bisa tahan berapa lama?",
+      "answer": "Alpukat matang dapat bertahan 3-5 hari di kulkas. Jika masih mentah, bisa bertahan 5-7 hari di suhu ruang hingga matang sempurna."
+    },
+    {
+      "id": 2,
+      "question": "Kenapa alpukat disebut superfood?",
+      "answer": "Alpukat mengandung lebih dari 20 vitamin dan mineral, termasuk vitamin K, E, C, dan B. Juga kaya akan lemak sehat omega-3 yang baik untuk jantung."
+    },
+    {
+      "id": 3,
+      "question": "Dari mana nama 'avocado' berasal?",
+      "answer": "Nama 'avocado' berasal dari kata Aztec 'ahuacatl' yang memiliki arti unik terkait bentuk buahnya. Nama ini telah digunakan sejak ribuan tahun lalu."
+    },
+    {
+      "id": 4,
+      "question": "Berapa lama pohon alpukat bisa hidup?",
+      "answer": "Pohon alpukat dapat hidup hingga 400 tahun dan terus menghasilkan buah! Satu pohon dewasa dapat menghasilkan 200-500 buah per tahun."
+    },
+    {
+      "id": 5,
+      "question": "Kapan alpukat pertama kali ditemukan?",
+      "answer": "Alpukat pertama kali ditemukan sekitar 5000 SM di Meksiko dan Amerika Tengah. Suku Aztec dan Maya telah mengonsumsinya selama ribuan tahun."
+    },
+    {
+      "id": 6,
+      "question": "Bagaimana cara mempercepat pematangan alpukat?",
+      "answer": "Simpan alpukat bersama pisang atau apel dalam kantong kertas. Gas etilen yang dikeluarkan buah-buah ini akan mempercepat proses pematangan menjadi 1-2 hari."
+    },
+    {
+      "id": 7,
+      "question": "Apa manfaat utama mengonsumsi alpukat?",
+      "answer": "Alpukat membantu menurunkan kolesterol jahat (LDL), meningkatkan kesehatan jantung, menjaga kesehatan mata, dan memberikan energi berkelanjutan dari lemak sehat."
+    },
+    {
+      "id": 8,
+      "question": "Negara mana yang menjadi produsen alpukat terbesar?",
+      "answer": "Meksiko adalah produsen alpukat terbesar di dunia, menghasilkan lebih dari 30% pasokan global. Diikuti oleh Republik Dominika, Peru, dan Indonesia."
+    },
+    {
+      "id": 9,
+      "question": "Kenapa alpukat cepat berubah warna kecoklatan?",
+      "answer": "Alpukat mengandung enzim polifenol oksidase yang bereaksi dengan oksigen. Untuk mencegahnya, teteskan air lemon atau simpan bersama bijinya."
+    },
+    {
+      "id": 10,
+      "question": "Apakah semua jenis alpukat sama rasanya?",
+      "answer": "Tidak! Ada lebih dari 500 varietas alpukat. Hass adalah yang paling populer dengan rasa creamy. Varietas lain seperti Fuerte lebih berair dan kurang lemak."
+    },
+    {
+      "id": 11,
+      "question": "Bagaimana cara menyimpan alpukat yang sudah dipotong?",
+      "answer": "Simpan di wadah kedap udara, teteskan air lemon pada permukaan, atau tutup dengan plastik wrap langsung menempel pada daging buah. Tahan 1-2 hari di kulkas."
+    },
+    {
+      "id": 12,
+      "question": "Apakah biji alpukat bisa dimakan?",
+      "answer": "Secara teknis bisa, tetapi tidak disarankan. Biji mengandung tanin yang pahit dan beberapa senyawa yang belum sepenuhnya diteliti keamanannya untuk konsumsi manusia."
+    },
+    {
+      "id": 13,
+      "question": "Kapan waktu terbaik memanen alpukat?",
+      "answer": "Alpukat dipanen saat masih keras dan matang di pohon. Waktu panen tergantung varietas, biasanya 6-12 bulan setelah pembungaan. Matang sempurna 5-7 hari setelah panen."
+    },
+    {
+      "id": 14,
+      "question": "Berapa kalori dalam satu alpukat?",
+      "answer": "Satu alpukat ukuran medium (150g) mengandung sekitar 240 kalori. Meskipun tinggi kalori, sebagian besar berasal dari lemak sehat yang baik untuk tubuh."
+    },
+    {
+      "id": 15,
+      "question": "Apakah alpukat baik untuk diet?",
+      "answer": "Ya! Meskipun tinggi kalori, alpukat kaya serat dan lemak sehat yang membuat kenyang lebih lama, membantu kontrol berat badan, dan meningkatkan metabolisme."
+    }
+  ],
+  "funFacts": [
+    {
+      "id": 1,
+      "icon": "🤔",
+      "text": "Pohon alpukat dapat hidup hingga 400 tahun dan terus menghasilkan buah! Satu pohon dewasa dapat menghasilkan hingga 500 buah per tahun."
+    },
+    {
+      "id": 2,
+      "icon": "🌳",
+      "text": "Alpukat adalah buah, bukan sayuran! Secara botani, alpukat termasuk dalam kategori berry berdaging satu biji."
+    },
+    {
+      "id": 3,
+      "icon": "💰",
+      "text": "Alpukat dijuluki 'emas hijau' karena nilai ekonominya yang tinggi. Industri alpukat global bernilai lebih dari $13 miliar per tahun."
+    },
+    {
+      "id": 4,
+      "icon": "🥑",
+      "text": "Kata 'guacamole' berasal dari bahasa Aztec 'ahuacamolli' yang berarti 'saus alpukat'. Resep ini sudah ada sejak abad ke-16!"
+    },
+    {
+      "id": 5,
+      "icon": "🌍",
+      "text": "Ada lebih dari 500 varietas alpukat di seluruh dunia, tetapi Hass menyumbang 95% produksi komersial global."
+    },
+    {
+      "id": 6,
+      "icon": "🔬",
+      "text": "Alpukat mengandung lebih banyak potasium daripada pisang - sekitar 485mg per 100g dibanding 358mg pada pisang."
+    },
+    {
+      "id": 7,
+      "icon": "⏰",
+      "text": "Alpukat tidak akan matang di pohon! Buah ini harus dipetik terlebih dahulu agar proses pematangan dimulai."
+    },
+    {
+      "id": 8,
+      "icon": "🎨",
+      "text": "Minyak alpukat digunakan dalam produk kosmetik premium karena kaya vitamin E dan dapat menembus lapisan kulit lebih dalam."
+    },
+    {
+      "id": 9,
+      "icon": "🏆",
+      "text": "Rekor alpukat terberat di dunia adalah 2,55 kg, ditemukan di Hawaii pada tahun 2018. Rata-rata alpukat hanya 150-200 gram!"
+    },
+    {
+      "id": 10,
+      "icon": "🌡️",
+      "text": "Alpukat sangat sensitif terhadap suhu. Pertumbuhannya optimal pada 15-30°C. Di bawah 5°C akan mengalami cold damage."
+    }
+  ]
+}
