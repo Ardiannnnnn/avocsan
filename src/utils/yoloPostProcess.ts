@@ -1,5 +1,5 @@
 export interface Detection {
-  bbox: [number, number, number, number];
+  bbox: [number, number, number, number]; // x1, y1, width, height (Pixel 0-640)
   confidence: number;
   className: string;
   classIndex: number;
@@ -10,7 +10,6 @@ export function calculateIoU(
   bbox2: [number, number, number, number]
 ): number {
   "worklet";
-
   const [x1, y1, w1, h1] = bbox1;
   const [x2, y2, w2, h2] = bbox2;
 
@@ -34,7 +33,7 @@ export function applyNMS(
   iouThreshold: number
 ): Detection[] {
   "worklet";
-
+  // Sort by confidence highest first
   const sorted = detections.sort((a, b) => b.confidence - a.confidence);
   const keep: Detection[] = [];
 
@@ -42,85 +41,72 @@ export function applyNMS(
     const current = sorted.shift()!;
     keep.push(current);
 
-    const remaining = sorted.filter((det) => {
-      const iou = calculateIoU(current.bbox, det.bbox);
-      return iou < iouThreshold;
-    });
-
-    sorted.length = 0;
-    sorted.push(...remaining);
+    // Remove detections that overlap too much
+    for (let i = sorted.length - 1; i >= 0; i--) {
+      if (calculateIoU(current.bbox, sorted[i].bbox) > iouThreshold) {
+        sorted.splice(i, 1);
+      }
+    }
   }
-
   return keep;
 }
 
 export function parseYOLOOutput(
   output: Float32Array,
   labels: string[],
-  inputSize: number,
-  confidenceThreshold: number = 0.4,
+  inputSize: number, // 640
+  confidenceThreshold: number = 0.45,
   iouThreshold: number = 0.45
 ): Detection[] {
   "worklet";
 
-  const numClasses = labels.length;
-  const numBoxes = 8400;
+  // LOGIKA BARU: Tanpa Transpose Manual
+  // Output YOLOv8 [1, 9, 8400] -> Flat Float32Array
+  // Urutan data di array:
+  // [8400 x-center] [8400 y-center] [8400 width] [8400 height] [8400 class0] ... [8400 class4]
+  
+  const numElements = 8400; 
+  const numChannels = 9; // 4 box + 5 classes
   const detections: Detection[] = [];
 
-  for (let i = 0; i < numBoxes; i++) {
-    const baseIdx = i * 9;
+  for (let i = 0; i < numElements; i++) {
+    // Mencari Skor Tertinggi di antara 5 kelas
+    let maxConf = 0;
+    let maxClassIndex = -1;
 
-    const x = output[baseIdx + 0];
-    const y = output[baseIdx + 1];
-    const w = output[baseIdx + 2];
-    const h = output[baseIdx + 3];
-
-    const classScores: number[] = [];
-    for (let c = 0; c < numClasses; c++) {
-      const score = output[baseIdx + 5 + c];
-      classScores.push(score);
+    // Loop kelas mulai dari channel ke-4 sampai ke-8
+    // Offset untuk setiap channel adalah 'numElements' (8400)
+    for (let c = 0; c < 5; c++) {
+      // Index 4 adalah awal kelas
+      const classConf = output[(4 + c) * numElements + i]; 
+      
+      if (classConf > maxConf) {
+        maxConf = classConf;
+        maxClassIndex = c;
+      }
     }
 
-    const maxScore = Math.max(...classScores);
-    const classIndex = classScores.indexOf(maxScore);
-    const confidence = maxScore;
+    if (maxConf > confidenceThreshold) {
+      // Baca koordinat (masih dalam skala 0-640 pixel dari model)
+      const x = output[0 * numElements + i];
+      const y = output[1 * numElements + i];
+      const w = output[2 * numElements + i];
+      const h = output[3 * numElements + i];
 
-    if (confidence > confidenceThreshold) {
-      const xMin = (x - w / 2) * inputSize;
-      const yMin = (y - h / 2) * inputSize;
-      const width = w * inputSize;
-      const height = h * inputSize;
-
+      // Konversi Center-XYWH ke TopLeft-XYWH
+      const xMin = x - w / 2;
+      const yMin = y - h / 2;
+      
+      // Simpan koordinat 0-640 ini. 
+      // Nanti akan di-scale ke layar HP oleh fungsi `scaleDetectionsCenterCrop`
       detections.push({
-        bbox: [xMin, yMin, width, height],
-        confidence,
-        className: labels[classIndex],
-        classIndex,
+        bbox: [xMin, yMin, w, h], 
+        confidence: maxConf,
+        className: labels[maxClassIndex] || `unknown_${maxClassIndex}`,
+        classIndex: maxClassIndex,
       });
     }
   }
 
   return applyNMS(detections, iouThreshold);
-}
-
-export function scaleDetections(
-  detections: Detection[],
-  inputSize: number,
-  screenWidth: number,
-  screenHeight: number
-): Detection[] {
-  "worklet";
-
-  return detections.map((det) => {
-    const [x, y, w, h] = det.bbox;
-    return {
-      ...det,
-      bbox: [
-        (x / inputSize) * screenWidth,
-        (y / inputSize) * screenHeight,
-        (w / inputSize) * screenWidth,
-        (h / inputSize) * screenHeight,
-      ],
-    };
-  });
 }

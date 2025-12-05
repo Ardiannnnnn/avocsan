@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Asset } from "expo-asset";
 import * as FileSystem from "expo-file-system/legacy";
-import { loadTensorflowModel } from "react-native-fast-tflite";
 import type { TensorflowModel } from "react-native-fast-tflite";
+import { Platform } from "react-native";
+import { loadTensorflowModel, type TensorflowModelDelegate } from "react-native-fast-tflite";
 
 export const useTFLiteModel = () => {
   const [model, setModel] = useState<TensorflowModel | null>(null);
@@ -22,7 +23,7 @@ export const useTFLiteModel = () => {
 
       // ✅ Use Asset.fromModule (works better for .tflite)
       const [modelAsset, labelsAsset] = await Asset.loadAsync([
-        require("../../assets/models/avocado_model.tflite"),
+        require("../../assets/models/model2.tflite"),
         require("../../assets/models/labels.txt"),
       ]);
 
@@ -47,10 +48,24 @@ export const useTFLiteModel = () => {
       setLabels(loadedLabels);
       console.log("✅ Labels loaded:", loadedLabels);
 
-      // ✅ Load TFLite model
-      const tfliteModel = await loadTensorflowModel({
-        url: modelAsset.localUri,
-      });
+      // // ✅ Load TFLite model
+      // const tfliteModel = await loadTensorflowModel(
+      //   { url: modelAsset.localUri },
+      //   (Platform.OS === "ios" ? "core-ml" : "gpu") as any
+      // ); 
+
+      const delegate: TensorflowModelDelegate = (Platform.OS === 'ios' ? 'core-ml' : 'default') as TensorflowModelDelegate;
+      
+      const tfliteModel = await loadTensorflowModel(
+        { url: modelAsset.localUri },
+        delegate
+      );
+      
+      setModel(tfliteModel);
+
+      console.log("✅ TFLite model loaded successfully");
+      console.log(`🚀 Delegate: ${delegate}`);
+      
       setModel(tfliteModel);
 
       console.log("✅ TFLite model loaded successfully");

@@ -2,6 +2,7 @@ import { View, Text, ScrollView, TouchableOpacity, Dimensions, Linking } from "r
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Image } from "react-native";
 
 
 const { width } = Dimensions.get("window");
@@ -19,7 +20,7 @@ export default function MagisterScreen() {
   const programs = [
     {
       icon: "🎓",
-      title: "Magister Teknik Informatika",
+      title: "Magister Informatika USK",
       desc: "Program studi yang fokus pada pengembangan ilmu dan teknologi informasi",
     },
     {
@@ -70,9 +71,14 @@ export default function MagisterScreen() {
 
         <View className="items-center">
           <View className="bg-white rounded-3xl p-6 mb-4">
-            <Text className="text-green-700 font-bold text-center text-2xl">
-              USK
-            </Text>
+          <Image
+            source={require('../../assets/logosuk.png')}
+            style={{
+              width: isSmallDevice ? 80 : isTablet ? 120 : 100,
+              height: isSmallDevice ? 80 : isTablet ? 120 : 100,
+              resizeMode: 'contain',
+            }}
+          />
           </View>
           <Text
             className="text-white font-bold text-center mb-2"
@@ -84,7 +90,7 @@ export default function MagisterScreen() {
             className="text-green-100 text-center"
             style={{ fontSize: isSmallDevice ? 13 : 15 }}
           >
-            Fakultas Teknik • Program Magister Informatika
+            Fakultas MIPA • Program Magister Informatika
           </Text>
         </View>
       </View>
@@ -108,7 +114,7 @@ export default function MagisterScreen() {
             className="text-gray-600 leading-6"
             style={{ fontSize: isSmallDevice ? 14 : 16 }}
           >
-            Program Studi Magister Teknik Informatika Universitas Syiah Kuala 
+            Program Studi Magister Informatika Universitas Syiah Kuala 
             merupakan program pendidikan pascasarjana yang berfokus pada pengembangan 
             kompetensi di bidang teknologi informasi, khususnya dalam penerapan 
             kecerdasan buatan, pengolahan data, dan sistem informasi.

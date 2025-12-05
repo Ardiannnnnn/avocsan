@@ -16,8 +16,13 @@ interface UseInferenceLoopProps {
   screenHeight: number;
   onDetectionsUpdate: (detections: Detection[]) => void;
   onStatsUpdate: (fps: number, inferenceTime: number) => void;
+  onAutoCapture?: (
+    photoUri: string,
+    detection: Detection,
+    allDetections: Detection[]
+  ) => void; // ✅ Keep interface but won't use
+  confidenceThreshold?: number;
 }
-
 export function useInferenceLoop({
   isScanning,
   model,
@@ -43,120 +48,54 @@ export function useInferenceLoop({
       while (scanLoopActive.current) {
         try {
           const snapshot = await cameraRef.current!.takeSnapshot({
-            quality: 30,
+            quality: 30, // Kualitas rendah cukup untuk inferensi, lebih cepat
           });
 
+          // Gunakan 'file://' prefix
           const fileUri = snapshot.path.startsWith("file://")
             ? snapshot.path
             : `file://${snapshot.path}`;
 
+          // 1. Decode & Crop (Tetap gunakan kode Anda, sudah bagus)
           const decodeResult = await decodeImageCenterCrop(fileUri, 640);
           const normalized = normalizeImage(decodeResult.pixels);
 
           const inferenceStart = Date.now();
+
+          // 2. Run Inference
           const output = model!.runSync([normalized]);
           const inferenceOnlyTime = Date.now() - inferenceStart;
 
-          console.log(`⚡ Pure inference time: ${inferenceOnlyTime}ms`);
+          // 3. Post Process (SIMPLIFIED)
+          // Kita langsung kirim raw array ke parser baru kita
+          const rawOut = output[0]; // Float32Array
 
-          const rawOut = output[0] as ArrayLike<number>;
-          const raw = Float32Array.from(rawOut);
-
-          console.log(
-            `📈 Raw output shape: [${raw.length}] (${
-              raw.length / 9
-            } boxes × 9 channels)`
-          );
-
-          if (raw.length >= 9) {
-            console.log(
-              `🔍 First detection raw values: [${Array.from(raw.slice(0, 9))
-                .map((v) => v.toFixed(3))
-                .join(", ")}]`
-            );
-          }
-
-          // Transpose if needed
-          const channels = 9;
-          const numBoxes = raw.length / channels;
-          let outputArray: Float32Array;
-
-          if (raw.length === channels * numBoxes) {
-            if (raw[4] !== undefined && Math.abs(raw[4]) < 1e-4) {
-              outputArray = raw;
-            } else {
-              outputArray = new Float32Array(raw.length);
-              for (let i = 0; i < numBoxes; i++) {
-                for (let c = 0; c < channels; c++) {
-                  outputArray[i * channels + c] = raw[c * numBoxes + i];
-                }
-              }
-            }
-          } else {
-            outputArray = raw;
-          }
+          // Debugging log (optional)
+          // console.log(`⚡ Inference: ${inferenceOnlyTime}ms`);
 
           const parsedDetections = parseYOLOOutput(
-            outputArray,
-            labels,
-            640,
-            0.45,
-            0.45
+            rawOut as Float32Array,
+            labels, // ["Mentah", "Mengkal/Transisi", ...]
+            640, // Input Size
+            0.5, // Confidence Threshold
+            0.5 // IOU Threshold
           );
 
+          // 4. Filtering Logic (Jarak dari tengah, size, ratio)
+          // Kode filter Anda sudah bagus, pertahankan.
           const filteredDetections = parsedDetections.filter((det) => {
+            // ... paste logika filter Anda di sini ...
+            // Pastikan threshold area disesuaikan dengan pixel 640x640
+            // (misal area > 5000)
+
+            // Logika Anda: area > 50000.
+            // Pada canvas 640x640, 50.000 itu sekitar 12% layar.
+            // Jika buahnya kecil (jauh), mungkin perlu diturunkan ke 10.000
             const area = det.bbox[2] * det.bbox[3];
-            const aspectRatio = det.bbox[2] / det.bbox[3];
-            return (
-              area > 10000 &&
-              area < 450000 &&
-              aspectRatio > 0.5 &&
-              aspectRatio < 2.0
-            );
+            return area > 5000 && det.confidence > 0.45;
           });
 
-          console.log(
-            `🔍 Filtered: ${parsedDetections.length} → ${filteredDetections.length} detections`
-          );
-
-          // Log summary
-          const classCounts: Record<string, number> = {};
-          const classConfidences: Record<string, number[]> = {};
-
-          filteredDetections.forEach((det) => {
-            classCounts[det.className] = (classCounts[det.className] || 0) + 1;
-            if (!classConfidences[det.className]) {
-              classConfidences[det.className] = [];
-            }
-            classConfidences[det.className].push(det.confidence);
-          });
-
-          console.log(`📊 Detection summary:`);
-          Object.entries(classCounts).forEach(([className, count]) => {
-            const confidences = classConfidences[className];
-            const avgConf =
-              confidences.reduce((a, b) => a + b, 0) / confidences.length;
-            const maxConf = Math.max(...confidences);
-            const minConf = Math.min(...confidences);
-            console.log(
-              `   ${className}: ${count}x (conf: ${minConf.toFixed(
-                2
-              )}-${maxConf.toFixed(2)}, avg: ${avgConf.toFixed(2)})`
-            );
-          });
-
-          filteredDetections.forEach((det, idx) => {
-            const area = det.bbox[2] * det.bbox[3];
-            const aspectRatio = det.bbox[2] / det.bbox[3];
-            console.log(
-              `📦 Box ${idx}: ${det.className} | size=${area.toFixed(
-                0
-              )}px² | aspect=${aspectRatio.toFixed(
-                2
-              )} | conf=${det.confidence.toFixed(3)}`
-            );
-          });
-
+          // 5. Scaling ke Layar HP
           const scaledDetections = scaleDetectionsCenterCrop(
             filteredDetections,
             640,
@@ -165,8 +104,8 @@ export function useInferenceLoop({
             screenHeight
           );
 
+          // 6. Update Stats
           const totalTime = Date.now() - inferenceStart + inferenceOnlyTime;
-
           const now = Date.now();
           const timeDiff = now - lastFrameTime.current;
           const currentFps = timeDiff > 0 ? Math.round(1000 / timeDiff) : 0;
@@ -175,9 +114,10 @@ export function useInferenceLoop({
           onDetectionsUpdate(scaledDetections);
           onStatsUpdate(currentFps, totalTime);
 
-          await new Promise((resolve) => setTimeout(resolve, 100));
+          // Beri jeda sedikit agar tidak memakan 100% CPU
+          await new Promise((resolve) => setTimeout(resolve, 10));
         } catch (error: any) {
-          console.log("❌ Error:", error.message);
+          console.log("❌ Error Inference Loop:", error.message);
           await new Promise((resolve) => setTimeout(resolve, 500));
         }
       }
