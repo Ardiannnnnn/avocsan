@@ -6,6 +6,11 @@
     "scheme": "acme",
     "userInterfaceStyle": "automatic",
     "orientation": "default",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
@@ -17,19 +22,17 @@
     "android": {
       "package": "com.ardi_expo.avocado",
       "minSdkVersion": 26,
-      "permissions": [
-        "android.permission.CAMERA"
-      ]
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/logo.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "permissions": ["android.permission.CAMERA"]
     },
     "web": {
       "output": "static",
       "bundler": "metro"
     },
-    "assetBundlePatterns": [
-      "**/*",
-      "assets/**/*",
-      "assets/models/*"
-    ],
+    "assetBundlePatterns": ["**/*", "assets/**/*", "assets/models/*"],
     "plugins": [
       [
         "expo-router",
