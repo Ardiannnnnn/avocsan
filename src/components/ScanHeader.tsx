@@ -21,13 +21,16 @@ export function ScanHeader({
         🥑 Avocado Scanner
       </Text>
       <Text className="text-green-200 text-sm text-center mt-1">
-        On-Device AI Detection (Silent Mode)
+        On-Device AI Detection 
       </Text>
 
       {isScanning && (
         <View className="bg-black/50 px-3 py-2 rounded-full mt-2">
-          <Text className="text-white text-xs text-center">
+          {/* <Text className="text-white text-xs text-center">
             🎯 Objects: {detectionCount} | ⚡ {inferenceTime}ms | 📹 {fps} FPS
+          </Text> */}
+           <Text className="text-white text-xs text-center">
+            🎯 Objects: {detectionCount} 
           </Text>
         </View>
       )}

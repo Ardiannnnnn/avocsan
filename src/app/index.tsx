@@ -102,19 +102,9 @@ export default function SplashScreen() {
                 className="text-white font-semibold text-center"
                 style={{ fontSize: isSmallDevice ? 14 : isTablet ? 20 : 16 }}
               >
-                Master of Kecerdasan
+                Magister Kecerdasan Buatan
               </Text>
             </View>
-
-            <Text
-              className="text-green-100 text-center"
-              style={{
-                fontSize: isSmallDevice ? 12 : isTablet ? 18 : 14,
-                maxWidth: isTablet ? 500 : 280,
-              }}
-            >
-              Inovasi Kecerdasan Buatan
-            </Text>
           </View>
 
           <View className="mb-8" style={{ maxWidth: isTablet ? 600 : undefined, alignSelf: "center", width: "100%" }}>
@@ -177,7 +167,7 @@ export default function SplashScreen() {
               Universitas Syiah Kuala
             </Text>
             <Text className="text-white/70 text-center mt-1" style={{ fontSize: isSmallDevice ? 10 : 12 }}>
-              Fakultas Teknik • Informatika
+              Fakultas MIPA • Informatika
             </Text>
           </View>
         </View>
