@@ -1,4 +1,11 @@
-import { View, Text, ScrollView, TouchableOpacity, Dimensions, Linking } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Dimensions,
+  Linking,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -15,7 +22,7 @@ export default function AboutScreen() {
     {
       icon: "scan",
       title: "Deteksi AI Real-time",
-      desc: "Teknologi YOLO11 untuk deteksi kematangan instan",
+      desc: "Teknologi YOLOv8 untuk deteksi kematangan instan",
     },
     {
       icon: "flash",
@@ -94,15 +101,17 @@ export default function AboutScreen() {
             className="text-gray-600 leading-6 mb-3"
             style={{ fontSize: isSmallDevice ? 14 : 16 }}
           >
-            Avocado Scanner adalah aplikasi mobile berbasis kecerdasan buatan yang 
-            membantu Anda mendeteksi tingkat kematangan alpukat secara otomatis dan akurat.
+            Avocado Scanner adalah aplikasi mobile berbasis kecerdasan buatan
+            yang membantu Anda mendeteksi tingkat kematangan alpukat secara
+            otomatis dan akurat.
           </Text>
           <Text
             className="text-gray-600 leading-6"
             style={{ fontSize: isSmallDevice ? 14 : 16 }}
           >
-            Dikembangkan menggunakan teknologi YOLOv8 dan TensorFlow Lite, aplikasi ini 
-            memberikan hasil deteksi real-time langsung dari kamera smartphone Anda.
+            Dikembangkan menggunakan teknologi YOLOv8 dan TensorFlow Lite,
+            aplikasi ini memberikan hasil deteksi real-time langsung dari kamera
+            smartphone Anda.
           </Text>
         </View>
 
@@ -117,8 +126,8 @@ export default function AboutScreen() {
         <View
           style={{
             maxWidth: isTablet ? 800 : undefined,
-            alignSelf: isTablet ? 'center' : 'auto',
-            width: '100%',
+            alignSelf: isTablet ? "center" : "auto",
+            width: "100%",
           }}
         >
           {features.map((feature, index) => (
@@ -128,7 +137,11 @@ export default function AboutScreen() {
             >
               <View className="flex-row items-start">
                 <View className="bg-blue-100 rounded-full p-3 mr-4">
-                  <Ionicons name={feature.icon as any} size={24} color="#2563eb" />
+                  <Ionicons
+                    name={feature.icon as any}
+                    size={24}
+                    color="#2563eb"
+                  />
                 </View>
                 <View className="flex-1">
                   <Text
@@ -160,23 +173,11 @@ export default function AboutScreen() {
           <View className="space-y-2">
             <View className="flex-row items-center mb-2">
               <Text className="text-blue-600 mr-2">▸</Text>
-              <Text className="text-gray-700">React Native + Expo</Text>
-            </View>
-            <View className="flex-row items-center mb-2">
-              <Text className="text-blue-600 mr-2">▸</Text>
-              <Text className="text-gray-700">YOLO11 Object Detection</Text>
+              <Text className="text-gray-700">YOLOv8 Object Detection</Text>
             </View>
             <View className="flex-row items-center mb-2">
               <Text className="text-blue-600 mr-2">▸</Text>
               <Text className="text-gray-700">TensorFlow Lite</Text>
-            </View>
-            <View className="flex-row items-center mb-2">
-              <Text className="text-blue-600 mr-2">▸</Text>
-              <Text className="text-gray-700">React Native Vision Camera</Text>
-            </View>
-            <View className="flex-row items-center">
-              <Text className="text-blue-600 mr-2">▸</Text>
-              <Text className="text-gray-700">React Native Skia</Text>
             </View>
           </View>
         </View>

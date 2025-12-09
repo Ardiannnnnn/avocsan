@@ -46,8 +46,8 @@ export const AVOCADO_CLASSES: Record<string, AvocadoClassInfo> = {
     description: '⚠️ Alpukat sangat matang, hampir terlalu lunak. Kulit kehitaman, daging sangat lembut. Masih aman dikonsumsi tapi harus segera digunakan. Mulai ada tanda-tanda overripe.'
   },
   'Busuk': {
-    label: 'Terlalu Matang',
-    stage: 'Terlalu Matang',
+    label: 'Busuk',
+    stage: 'Busuk',
     emoji: '⚫',
     color: '#ef4444',
     shelfLife: 'Tidak layak',

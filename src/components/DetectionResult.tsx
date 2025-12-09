@@ -5,13 +5,14 @@ import {
   Image,
   ScrollView,
   Dimensions,
+  Animated,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Detection } from "../utils/yoloPostProcess";
 import { getClassInfo } from "../utils/avocadoClassification";
 import { getColorForClass } from "../utils/colors";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 
@@ -41,10 +42,16 @@ export const DetectionResult = ({
 }: DetectionResultProps) => {
   const insets = useSafeAreaInsets();
   const classInfo = getClassInfo(detection.className);
+  
+  // ✅ CHANGE: Slide animation instead of fade
+  const slideAnim = useRef(new Animated.Value(0)).current;
+  const fadeAnim = useRef(new Animated.Value(1)).current;
 
   const handleFinish = () => {
+    // ✅ FIX: Navigate to home tab
     router.push("/(tabs)");
-  }
+  };
+  
   // ✅ Track original image dimensions for bbox scaling
   const [originalImageDimensions, setOriginalImageDimensions] = useState({
     width: 0,
@@ -123,7 +130,13 @@ export const DetectionResult = ({
   };
 
   return (
-    <View className="flex-1 bg-gray-50">
+    <Animated.View 
+      className="flex-1 bg-gray-50"
+      style={{ 
+        opacity: fadeAnim,
+        transform: [{ translateX: slideAnim }] // ✅ ADD: Slide effect
+      }}
+    >
       <ScrollView
         contentContainerStyle={{
           paddingBottom: insets.bottom + 80,
@@ -588,6 +601,6 @@ export const DetectionResult = ({
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </Animated.View>
   );
 };
