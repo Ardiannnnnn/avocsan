@@ -33,7 +33,6 @@ export function applyNMS(
   iouThreshold: number
 ): Detection[] {
   "worklet";
-  // Sort by confidence highest first
   const sorted = detections.sort((a, b) => b.confidence - a.confidence);
   const keep: Detection[] = [];
 
@@ -41,7 +40,6 @@ export function applyNMS(
     const current = sorted.shift()!;
     keep.push(current);
 
-    // Remove detections that overlap too much
     for (let i = sorted.length - 1; i >= 0; i--) {
       if (calculateIoU(current.bbox, sorted[i].bbox) > iouThreshold) {
         sorted.splice(i, 1);
@@ -55,29 +53,29 @@ export function parseYOLOOutput(
   output: Float32Array,
   labels: string[],
   inputSize: number, // 640
-  confidenceThreshold: number = 0.45,
-  iouThreshold: number = 0.45
+  confidenceThreshold: number = 0.5,
+  iouThreshold: number = 0.5
 ): Detection[] {
   "worklet";
 
-  // LOGIKA BARU: Tanpa Transpose Manual
-  // Output YOLOv8 [1, 9, 8400] -> Flat Float32Array
-  // Urutan data di array:
-  // [8400 x-center] [8400 y-center] [8400 width] [8400 height] [8400 class0] ... [8400 class4]
-  
   const numElements = 8400; 
-  const numChannels = 9; // 4 box + 5 classes
+  // ✅ PERBAIKAN 1: Hitung jumlah kelas secara dinamis dari labels
+  const numClasses = labels.length; 
   const detections: Detection[] = [];
 
+  // Validasi keamanan array agar tidak crash jika output model tidak sesuai label
+  if (output.length < (4 + numClasses) * numElements) {
+    console.log(`⚠️ Output size mismatch. Model output len: ${output.length}, Expected > ${(4 + numClasses) * numElements}`);
+    return [];
+  }
+
   for (let i = 0; i < numElements; i++) {
-    // Mencari Skor Tertinggi di antara 5 kelas
     let maxConf = 0;
     let maxClassIndex = -1;
 
-    // Loop kelas mulai dari channel ke-4 sampai ke-8
-    // Offset untuk setiap channel adalah 'numElements' (8400)
-    for (let c = 0; c < 5; c++) {
-      // Index 4 adalah awal kelas
+    // ✅ PERBAIKAN 2: Loop sesuai jumlah kelas asli (bukan hardcode 5)
+    for (let c = 0; c < numClasses; c++) {
+      // Index 4 adalah awal kelas (0=x, 1=y, 2=w, 3=h)
       const classConf = output[(4 + c) * numElements + i]; 
       
       if (classConf > maxConf) {
@@ -86,19 +84,19 @@ export function parseYOLOOutput(
       }
     }
 
+    // ✅ PERBAIKAN 3: Filter ketat menggunakan threshold yang dioper
     if (maxConf > confidenceThreshold) {
-      // Baca koordinat (masih dalam skala 0-640 pixel dari model)
+      // Debugging: Intip apa yang dideteksi dan berapa persen yakinnya
+      // console.log(`🧐 Kandidat: ${labels[maxClassIndex]} (${(maxConf * 100).toFixed(0)}%)`);
+
       const x = output[0 * numElements + i];
       const y = output[1 * numElements + i];
       const w = output[2 * numElements + i];
       const h = output[3 * numElements + i];
 
-      // Konversi Center-XYWH ke TopLeft-XYWH
       const xMin = x - w / 2;
       const yMin = y - h / 2;
       
-      // Simpan koordinat 0-640 ini. 
-      // Nanti akan di-scale ke layar HP oleh fungsi `scaleDetectionsCenterCrop`
       detections.push({
         bbox: [xMin, yMin, w, h], 
         confidence: maxConf,

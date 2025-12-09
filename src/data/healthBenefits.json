@@ -11,7 +11,7 @@
       "id": 2,
       "icon": "🧠",
       "title": "Fungsi Otak",
-      "desc": "Omega-3 dan vitamin E mendukung kesehatan otak dan meningkatkan daya ingat",
+      "desc": "Mengandung omega-3 dan vitamin E yang baik untuk kesehatan otak dan meningkatkan daya ingat",
       "color": "#8b5cf6"
     },
     {
@@ -32,7 +32,7 @@
       "id": 5,
       "icon": "🦴",
       "title": "Tulang Kuat",
-      "desc": "Vitamin K membantu penyerapan kalsium untuk kesehatan tulang optimal",
+      "desc": "Vitamin K membantu penyerapan kalsium untuk kesehatan tulang",
       "color": "#06b6d4"
     },
     {
@@ -60,7 +60,7 @@
       "id": 9,
       "icon": "🍃",
       "title": "Detoksifikasi",
-      "desc": "Glutathione membantu membersihkan racun dari hati dan tubuh",
+      "desc": "Glutathione membantu membersihkan racun dalam hati dan tubuh",
       "color": "#84cc16"
     },
     {
@@ -74,7 +74,7 @@
       "id": 11,
       "icon": "🏃",
       "title": "Metabolisme",
-      "desc": "Vitamin B kompleks membantu mengubah makanan menjadi energi efisien",
+      "desc": "Vitamin B kompleks membantu mengubah makanan menjadi energi",
       "color": "#14b8a6"
     },
     {

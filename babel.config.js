@@ -6,8 +6,17 @@ module.exports = function (api) {
       "nativewind/babel",
     ],
     plugins: [
+      // Plugin Worklets (Wajib untuk Vision Camera / Skia)
       ["react-native-worklets-core/plugin", { processNestedWorklets: true }],
-      "react-native-reanimated/plugin", // MUST BE LAST
+      
+      // Plugin Reanimated (WAJIB TERAKHIR di list utama ini)
+      "react-native-reanimated/plugin",
     ],
+    // ✅ Tambahkan blok ini untuk Production
+    env: {
+      production: {
+        plugins: ["transform-remove-console"],
+      },
+    },
   };
 };

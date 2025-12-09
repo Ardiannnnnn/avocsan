@@ -3,7 +3,7 @@
     {
       "id": 1,
       "question": "Tahukah kamu alpukat bisa tahan berapa lama?",
-      "answer": "Alpukat matang dapat bertahan 3-5 hari di kulkas. Jika masih mentah, bisa bertahan 5-7 hari di suhu ruang hingga matang sempurna."
+      "answer": "Alpukat matang dapat bertahan 3-5 hari dalam kulkas. Jika masih mentah, bisa bertahan 5-7 hari pada suhu ruangan hingga matang sempurna."
     },
     {
       "id": 2,
@@ -18,7 +18,7 @@
     {
       "id": 4,
       "question": "Berapa lama pohon alpukat bisa hidup?",
-      "answer": "Pohon alpukat dapat hidup hingga 400 tahun dan terus menghasilkan buah! Satu pohon dewasa dapat menghasilkan 200-500 buah per tahun."
+      "answer": "Pohon alpukat dapat hidup hingga 400 tahun dan terus menghasilkan buah. Satu pohon dewasa dapat menghasilkan 200-500 buah per tahun."
     },
     {
       "id": 5,
@@ -43,27 +43,27 @@
     {
       "id": 9,
       "question": "Kenapa alpukat cepat berubah warna kecoklatan?",
-      "answer": "Alpukat mengandung enzim polifenol oksidase yang bereaksi dengan oksigen. Untuk mencegahnya, teteskan air lemon atau simpan bersama bijinya."
+      "answer": "Alpukat mengandung enzim polifenol oksidase yang bereaksi dengan oksigen. Untuk mencegah oksidasi, teteskan air lemon atau simpan bersama bijinya ketika telah dibelah."
     },
     {
       "id": 10,
       "question": "Apakah semua jenis alpukat sama rasanya?",
-      "answer": "Tidak! Ada lebih dari 500 varietas alpukat. Hass adalah yang paling populer dengan rasa creamy. Varietas lain seperti Fuerte lebih berair dan kurang lemak."
+      "answer": "Tidak! Ada lebih dari 500 varietas alpukat. Hass adalah varietas yang paling populer dengan rasa creamy. Varietas lain seperti Fuerte lebih berair dan kurang lemak."
     },
     {
       "id": 11,
       "question": "Bagaimana cara menyimpan alpukat yang sudah dipotong?",
-      "answer": "Simpan di wadah kedap udara, teteskan air lemon pada permukaan, atau tutup dengan plastik wrap langsung menempel pada daging buah. Tahan 1-2 hari di kulkas."
+      "answer": "Simpan di wadah kedap udara, teteskan air lemon pada permukaan, atau tutup dengan kertas wrap langsung menempel pada daging buah. Cara ini membuat alpukat bertahan 1-2 hari dalam kulkas."
     },
     {
       "id": 12,
       "question": "Apakah biji alpukat bisa dimakan?",
-      "answer": "Secara teknis bisa, tetapi tidak disarankan. Biji mengandung tanin yang pahit dan beberapa senyawa yang belum sepenuhnya diteliti keamanannya untuk konsumsi manusia."
+      "answer": "Secara teknis bisa, tetapi tidak disarankan. Biji mengandung tanin yang pahit dan beberapa senyawa yang belum sepenuhnya diteliti keamanannya untuk dikonsumsi."
     },
     {
       "id": 13,
       "question": "Kapan waktu terbaik memanen alpukat?",
-      "answer": "Alpukat dipanen saat masih keras dan matang di pohon. Waktu panen tergantung varietas, biasanya 6-12 bulan setelah pembungaan. Matang sempurna 5-7 hari setelah panen."
+      "answer": "Alpukat dipanen saat masih keras dan matang di pohon. Waktu panen tergantung varietas, biasanya 6-12 bulan setelah berbunga. Matang sempurna 5-7 hari setelah dipanen."
     },
     {
       "id": 14,
@@ -73,44 +73,44 @@
     {
       "id": 15,
       "question": "Apakah alpukat baik untuk diet?",
-      "answer": "Ya! Meskipun tinggi kalori, alpukat kaya serat dan lemak sehat yang membuat kenyang lebih lama, membantu kontrol berat badan, dan meningkatkan metabolisme."
+      "answer": "Ya! Meskipun tinggi kalori, alpukat kaya serat dan lemak sehat yang membuat kenyang lebih lama, membantu kontrol berat badan dan meningkatkan metabolisme."
     }
   ],
   "funFacts": [
     {
       "id": 1,
       "icon": "🤔",
-      "text": "Pohon alpukat dapat hidup hingga 400 tahun dan terus menghasilkan buah! Satu pohon dewasa dapat menghasilkan hingga 500 buah per tahun."
+      "text": "Pohon alpukat dapat hidup hingga 400 tahun dan terus menghasilkan buah. Satu pohon dewasa dapat menghasilkan hingga 500 buah per tahun."
     },
     {
       "id": 2,
       "icon": "🌳",
-      "text": "Alpukat adalah buah, bukan sayuran! Secara botani, alpukat termasuk dalam kategori berry berdaging satu biji."
+      "text": "Alpukat adalah buah, bukan sayuran. Secara botani, alpukat termasuk dalam kategori berry berdaging satu biji."
     },
     {
       "id": 3,
       "icon": "💰",
-      "text": "Alpukat dijuluki 'emas hijau' karena nilai ekonominya yang tinggi. Industri alpukat global bernilai lebih dari $13 miliar per tahun."
+      "text": "Alpukat dijuluki 'emas hijau' karena nilai ekonominya yang tinggi. Industri alpukat global bernilai omset lebih dari $13 miliar per tahun."
     },
     {
       "id": 4,
       "icon": "🥑",
-      "text": "Kata 'guacamole' berasal dari bahasa Aztec 'ahuacamolli' yang berarti 'saus alpukat'. Resep ini sudah ada sejak abad ke-16!"
+      "text": "Kata 'guacamole' berasal dari bahasa Aztec 'ahuacamolli' yang berarti 'saus alpukat'. Resep ini sudah ada sejak abad ke-16 di Meksiko."
     },
     {
       "id": 5,
       "icon": "🌍",
-      "text": "Ada lebih dari 500 varietas alpukat di seluruh dunia, tetapi Hass menyumbang 95% produksi komersial global."
+      "text": "Ada lebih dari 500 varietas alpukat di seluruh dunia, tetapi varietas Hass menyumbang 95% produksi komersial global."
     },
     {
       "id": 6,
       "icon": "🔬",
-      "text": "Alpukat mengandung lebih banyak potasium daripada pisang - sekitar 485mg per 100g dibanding 358mg pada pisang."
+      "text": "Alpukat mengandung lebih banyak potasium daripada pisang, sekitar 485mg per 100g dibanding 358mg pada pisang."
     },
     {
       "id": 7,
       "icon": "⏰",
-      "text": "Alpukat tidak akan matang di pohon! Buah ini harus dipetik terlebih dahulu agar proses pematangan dimulai."
+      "text": "Alpukat tidak akan matang di pohon. Buah ini harus dipetik terlebih dahulu agar proses pematangan dimulai."
     },
     {
       "id": 8,
@@ -120,12 +120,12 @@
     {
       "id": 9,
       "icon": "🏆",
-      "text": "Rekor alpukat terberat di dunia adalah 2,55 kg, ditemukan di Hawaii pada tahun 2018. Rata-rata alpukat hanya 150-200 gram!"
+      "text": "Rekor alpukat terberat di dunia adalah 2,55 kg, ditemukan di Hawaii pada tahun 2018. Rata-rata alpukat hanya 150-200 gram."
     },
     {
       "id": 10,
       "icon": "🌡️",
-      "text": "Alpukat sangat sensitif terhadap suhu. Pertumbuhannya optimal pada 15-30°C. Di bawah 5°C akan mengalami cold damage."
+      "text": "Alpukat sangat sensitif terhadap suhu. Pertumbuhannya optimal pada 15-30°C. Di bawah 5°C akan mengalami kerusakan akibat suhu dingin."
     }
   ]
 }

@@ -1,78 +1,47 @@
-# 🥑 Avocado Scanner -- Machine Learning Mobile App
+# 🥑 Avocado Scanner — Mobile ML App
 
-**Avocado Scanner** adalah aplikasi mobile berbasis **React Native**
-untuk mendeteksi **tingkat kematangan alpukat** menggunakan **Machine
-Learning on-device**.\
-Aplikasi ini memanfaatkan kamera ponsel untuk melakukan deteksi
-real-time dan menampilkan bounding box beserta hasil klasifikasi
-seperti:
+**Avocado Scanner** adalah aplikasi mobile berbasis **React Native (Expo Bare Workflow)** yang digunakan untuk mendeteksi **tingkat kematangan alpukat** menggunakan **Machine Learning on-device**.  
+Aplikasi ini melakukan deteksi real-time melalui kamera dan menghasilkan klasifikasi berikut:
 
--   **Unripe (Mentah)**
--   **Ripe (Matang)**
--   **Overripe (Terlalu matang)**
+- **Mentah 🟢**
+- **Mengkal 🟡**
+- **Matang 🟠**
+- **Sangat Matang 🟤**
+- **Busuk ⚫**
 
-Aplikasi ini dibangun menggunakan:
+Setiap hasil klasifikasi memberikan:
+- Warna indikator  
+- Rekomendasi penggunaan  
+- Perkiraan daya simpan  
+- Penjelasan tingkat kematangan  
 
--   **React Native (Expo Bare Workflow)**
--   **TensorFlow Lite / TFJS**
--   **Expo Router**
--   **NativeWind (Tailwind CSS)**
--   **Camera API**
+---
 
 ## ✨ Fitur Utama
 
--   📸 Scan alpukat real-time melalui kamera
--   🤖 Deteksi kematangan menggunakan machine learning offline
--   ⚡ Bounding box dan confidence score
--   🎨 UI modern menggunakan Tailwind (NativeWind)
--   🚀 Build Android & iOS
--   🔒 100% offline
+- 📸 Deteksi alpukat real-time melalui kamera  
+- 🤖 Machine Learning berjalan **offline**  
+- 🔍 Bounding box + confidence score  
+- 🎨 UI modern (NativeWind / Tailwind CSS)  
+- 🚀 Build Android & iOS  
+- ⚡ Ringan & cepat  
+
+---
 
 ## 🛠️ Teknologi
 
--   React Native (Bare Workflow)
--   TensorFlow Lite / TensorFlow JS
--   Expo Router
--   NativeWind (Tailwind CSS)
--   expo-camera / vision-camera
+- React Native (Expo Bare Workflow)  
+- TensorFlow Lite / TensorFlow.js  
+- Expo Router  
+- NativeWind (Tailwind CSS)  
+- expo-camera / vision-camera  
+
+---
 
 ## 🚀 Menjalankan Proyek
 
 ### 1. Clone Repository
-
-    git clone https://github.com/USERNAME/avocado-scanner.git
-    cd avocado-scanner
-
-### 2. Install Dependency
-
-    npm install
-
-### 3. Jalankan Aplikasi
-
-    npx expo start
-
-> Model ML tidak termasuk repository. Tambahkan manually ke:
-
-    assets/models/
-
-## 📁 Struktur Project
-
-    src/
-     ├── components/
-     ├── screens/
-     ├── ml/
-     ├── utils/
-
-    assets/
-     ├── models/
-     ├── images/
-
-    android/
-
-## 🚀 Deployment
-
-    npx eas-cli build
-
-## 📜 Lisensi
-
-MIT License.
+```bash
+git clone https://github.com/USERNAME/avocado-scanner.git
+cd avocado-scanner
+    

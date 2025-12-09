@@ -6,7 +6,7 @@ import {
   Dimensions,
   Alert,
   AppState,
-  ActivityIndicator, // ✅ ADD
+  ActivityIndicator,
 } from "react-native";
 import {
   Camera,
@@ -23,13 +23,18 @@ import { BoundingBoxes } from "../../components/BoundingBoxes";
 import { DetectionResult } from "../../components/DetectionResult";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as KeepAwake from "expo-keep-awake";
+import { useIsFocused } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("window");
+const isSmallDevice = width < 375;
+const isMediumDevice = width >= 375 && width < 414;
+const isTablet = width >= 768;
 
 export default function ScanScreen() {
   const insets = useSafeAreaInsets();
   const device = useCameraDevice("back");
   const cameraRef = useRef<Camera>(null);
+  const isFocused = useIsFocused(); //
   const { hasPermission, requestPermission } = useCameraPermission();
 
   const format = useMemo(() => {
@@ -59,6 +64,8 @@ export default function ScanScreen() {
 
   // ✅ NEW: Loading state
   const [isCapturing, setIsCapturing] = useState(false);
+  const isCameraActive =
+    !!device && isFocused && appState === "active" && !capturedPhoto;
 
   // Keep Awake Handler
   useEffect(() => {
@@ -129,7 +136,6 @@ export default function ScanScreen() {
       setFps(newFps);
       setInferenceTime(newInferenceTime);
     },
-    onAutoCapture: () => {},
     confidenceThreshold: 0.65,
   });
 
@@ -155,12 +161,12 @@ export default function ScanScreen() {
       setIsDetecting(false);
 
       // Small delay to ensure UI updates
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
       // Take snapshot
       console.log("📸 Taking snapshot...");
       const snapshotStart = Date.now();
-      
+
       const snapshot = await cameraRef.current!.takeSnapshot({
         quality: 85,
       });
@@ -189,13 +195,12 @@ export default function ScanScreen() {
 
       // ✅ Hide loading
       setIsCapturing(false);
-
     } catch (error: any) {
       console.error("❌ Snapshot error:", error);
-      
+
       // ✅ Hide loading on error
       setIsCapturing(false);
-      
+
       Alert.alert("Error", "Gagal mengambil foto. Coba lagi.");
       setIsDetecting(true);
     }
@@ -240,9 +245,7 @@ export default function ScanScreen() {
     return (
       <View className="flex-1 justify-center items-center bg-gray-900">
         <Ionicons name="cube-outline" size={80} color="white" />
-        <Text className="text-white text-2xl font-bold mt-6">
-         Loading...
-        </Text>
+        <Text className="text-white text-2xl font-bold mt-6">Loading...</Text>
       </View>
     );
   }
@@ -274,16 +277,14 @@ export default function ScanScreen() {
       <Camera
         ref={cameraRef}
         device={device}
-        isActive={true}
+        isActive={isCameraActive}
         format={format}
         photo={true}
         style={StyleSheet.absoluteFill}
       />
 
-      {/* ✅ CAMERA VIEW (Real-time detection) */}
       {!capturedPhoto && (
         <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
-          {/* Header Stats */}
           <ScanHeader
             isScanning={isDetecting}
             detectionCount={detections.length}
@@ -292,95 +293,117 @@ export default function ScanScreen() {
             topInset={insets.top}
           />
 
-          {/* Bounding Boxes */}
           <BoundingBoxes detections={detections} />
 
-          {/* ✅ Manual Scan Controls */}
+          {/* ✅ RESPONSIVE Manual Scan Controls */}
           <View
             style={{
               position: "absolute",
-              bottom: insets.bottom + 24,
+              bottom: insets.bottom + (isSmallDevice ? 16 : 24),
               left: 0,
               right: 0,
-              paddingHorizontal: 40,
+              paddingHorizontal: isTablet ? 60 : isSmallDevice ? 24 : 40,
             }}
           >
             <View className="items-center">
-              {/* Info Text */}
               {detections.length > 0 ? (
-                <View className="bg-green-500/80 backdrop-blur-sm px-6 py-3 rounded-2xl mb-4">
-                  <Text className="text-white font-bold text-center">
+                <View
+                  className="bg-green-500/80 backdrop-blur-sm rounded-2xl mb-4"
+                  style={{
+                    paddingHorizontal: isSmallDevice ? 16 : 24,
+                    paddingVertical: isSmallDevice ? 10 : 12,
+                  }}
+                >
+                  <Text
+                    className="text-white font-bold text-center"
+                    style={{ fontSize: isSmallDevice ? 13 : 15 }}
+                  >
                     ✓ {detections.length} alpukat terdeteksi
                   </Text>
-                  <Text className="text-white/90 text-xs text-center mt-1">
+                  <Text
+                    className="text-white/90 text-center mt-1"
+                    style={{ fontSize: isSmallDevice ? 10 : 12 }}
+                  >
                     Tekan tombol untuk melihat hasil
                   </Text>
                 </View>
               ) : (
-                <Text className="text-white/80 text-sm mb-4 text-center">
-                  Arahkan kamera ke alpukat
+                <Text
+                  className="text-white/80 mb-4 text-center"
+                  style={{ fontSize: isSmallDevice ? 12 : 14 }}
+                >
+                  Arahkan kamera ke buah alpukat
                 </Text>
               )}
 
-              {/* ✅ UPDATED: Button with loading state */}
+              {/* ✅ RESPONSIVE Button */}
               <TouchableOpacity
                 onPress={handleStartAIScan}
                 disabled={detections.length === 0 || isCapturing}
-                className={`rounded-full p-6 shadow-2xl ${
+                className={`rounded-full shadow-2xl ${
                   isCapturing
                     ? "bg-yellow-600"
                     : detections.length > 0
                     ? "bg-green-600"
                     : "bg-gray-600"
                 }`}
+                style={{
+                  padding: isSmallDevice ? 18 : isTablet ? 28 : 24,
+                }}
                 activeOpacity={0.8}
               >
                 {isCapturing ? (
-                  <ActivityIndicator size={40} color="white" />
+                  <ActivityIndicator
+                    size={isSmallDevice ? 32 : isTablet ? 48 : 40}
+                    color="white"
+                  />
                 ) : (
-                  <Ionicons name="scan-circle" size={40} color="white" />
+                  <Ionicons
+                    name="scan-circle"
+                    size={isSmallDevice ? 32 : isTablet ? 48 : 40}
+                    color="white"
+                  />
                 )}
               </TouchableOpacity>
 
-              {/* ✅ UPDATED: Button Label with loading text */}
-              <Text className="text-white font-bold text-base mt-4">
+              {/* ✅ RESPONSIVE Label */}
+              <Text
+                className="text-white font-bold mt-4"
+                style={{ fontSize: isSmallDevice ? 14 : isTablet ? 20 : 16 }}
+              >
                 {isCapturing
                   ? "Memproses..."
                   : detections.length > 0
-                  ? "Start AI Scan"
-                  : "Mencari Alpukat..."}
+                  ? "Start Scanning"
+                  : "Mencari Buah Alpukat..."}
               </Text>
-
-              {/* FPS & Inference Time */}
-              {/* {!isCapturing && (
-                <View className="flex-row gap-3 mt-4">
-                  <View className="bg-black/60 backdrop-blur-sm px-4 py-2 rounded-full">
-                    <Text className="text-white font-bold text-sm">
-                      {fps} FPS
-                    </Text>
-                  </View>
-                  <View className="bg-black/60 backdrop-blur-sm px-4 py-2 rounded-full">
-                    <Text className="text-white font-bold text-sm">
-                      {inferenceTime}ms
-                    </Text>
-                  </View>
-                </View>
-              )} */}
             </View>
           </View>
 
-          {/* ✅ NEW: Fullscreen Loading Overlay */}
+          {/* ✅ RESPONSIVE Loading Overlay */}
           {isCapturing && (
             <View
               style={StyleSheet.absoluteFill}
               className="bg-black/70 items-center justify-center"
             >
-              <View className="bg-gray-800/90 backdrop-blur-lg rounded-3xl px-8 py-6 items-center">
+              <View
+                className="bg-gray-800/90 backdrop-blur-lg rounded-3xl items-center"
+                style={{
+                  paddingHorizontal: isSmallDevice ? 24 : isTablet ? 48 : 32,
+                  paddingVertical: isSmallDevice ? 20 : isTablet ? 32 : 24,
+                }}
+              >
                 <ActivityIndicator size="large" color="#10b981" />
-                <Text className="text-white font-bold text-lg mt-4">
+                <Text
+                  className="text-white font-bold mt-4"
+                  style={{ fontSize: isSmallDevice ? 16 : isTablet ? 22 : 18 }}
+                >
                   Mengambil Foto...
                 </Text>
-                <Text className="text-gray-400 text-sm mt-2">
+                <Text
+                  className="text-gray-400 mt-2"
+                  style={{ fontSize: isSmallDevice ? 12 : isTablet ? 16 : 14 }}
+                >
                   Mohon tunggu sebentar
                 </Text>
               </View>
@@ -389,7 +412,6 @@ export default function ScanScreen() {
         </View>
       )}
 
-      {/* ✅ RESULT SCREEN */}
       {capturedPhoto && bestDetection && (
         <DetectionResult
           photoUri={capturedPhoto}

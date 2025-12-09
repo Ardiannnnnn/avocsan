@@ -101,7 +101,7 @@ export default function AboutScreen() {
             className="text-gray-600 leading-6"
             style={{ fontSize: isSmallDevice ? 14 : 16 }}
           >
-            Dikembangkan menggunakan teknologi YOLO11 dan TensorFlow Lite, aplikasi ini 
+            Dikembangkan menggunakan teknologi YOLOv8 dan TensorFlow Lite, aplikasi ini 
             memberikan hasil deteksi real-time langsung dari kamera smartphone Anda.
           </Text>
         </View>

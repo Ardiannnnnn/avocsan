@@ -1,11 +1,15 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
+
+const { width } = Dimensions.get("window");
+const isSmallDevice = width < 375;
+const isTablet = width >= 768;
 
 interface ScanHeaderProps {
   isScanning: boolean;
   detectionCount: number;
   inferenceTime: number;
   fps: number;
-  topInset:number;
+  topInset: number;
 }
 
 export function ScanHeader({
@@ -16,21 +20,41 @@ export function ScanHeader({
   topInset,
 }: ScanHeaderProps) {
   return (
-    <View style={[styles.header,  { paddingTop: topInset + 16 }]}>
-      <Text className="text-white text-2xl font-bold text-center">
+    <View
+      style={[
+        styles.header,
+        {
+          paddingTop: topInset + (isSmallDevice ? 12 : 16),
+          paddingHorizontal: isTablet ? 40 : 24,
+        },
+      ]}
+    >
+      <Text
+        className="text-white font-bold text-center"
+        style={{ fontSize: isSmallDevice ? 20 : isTablet ? 32 : 24 }}
+      >
         🥑 Avocado Scanner
       </Text>
-      <Text className="text-green-200 text-sm text-center mt-1">
-        On-Device AI Detection 
+      <Text
+        className="text-green-200 text-center mt-1"
+        style={{ fontSize: isSmallDevice ? 11 : isTablet ? 16 : 14 }}
+      >
+        On-Device AI Detection
       </Text>
 
       {isScanning && (
-        <View className="bg-black/50 px-3 py-2 rounded-full mt-2">
-          {/* <Text className="text-white text-xs text-center">
-            🎯 Objects: {detectionCount} | ⚡ {inferenceTime}ms | 📹 {fps} FPS
-          </Text> */}
-           <Text className="text-white text-xs text-center">
-            🎯 Objects: {detectionCount} 
+        <View
+          className="bg-black/50 rounded-full mt-2"
+          style={{
+            paddingHorizontal: isSmallDevice ? 10 : 12,
+            paddingVertical: isSmallDevice ? 6 : 8,
+          }}
+        >
+          <Text
+            className="text-white text-center"
+            style={{ fontSize: isSmallDevice ? 10 : isTablet ? 14 : 12 }}
+          >
+            🎯 Objects: {detectionCount}
           </Text>
         </View>
       )}
@@ -44,9 +68,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    paddingTop: 48,
     paddingBottom: 16,
-    paddingHorizontal: 24,
     backgroundColor: "rgba(0,0,0,0.5)",
     zIndex: 10,
   },

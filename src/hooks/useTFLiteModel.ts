@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { Asset } from "expo-asset";
 import * as FileSystem from "expo-file-system/legacy";
-import type { TensorflowModel } from "react-native-fast-tflite";
 import { Platform } from "react-native";
-import { loadTensorflowModel, type TensorflowModelDelegate } from "react-native-fast-tflite";
+import { loadTensorflowModel, type TensorflowModel, type TensorflowModelDelegate } from "react-native-fast-tflite";
 
 export const useTFLiteModel = () => {
   const [model, setModel] = useState<TensorflowModel | null>(null);
@@ -21,63 +20,56 @@ export const useTFLiteModel = () => {
       setIsLoading(true);
       setError(null);
 
-      // ✅ Use Asset.fromModule (works better for .tflite)
-      const [modelAsset, labelsAsset] = await Asset.loadAsync([
-        require("../../assets/models/model2.tflite"),
-        require("../../assets/models/labels.txt"),
+      // 1. Definisikan Asset
+      const modelModule = require("../../assets/models/model2.tflite");
+      const labelsModule = require("../../assets/models/labels.txt");
+
+      // 2. Buat objek Asset dari module
+      const modelAsset = Asset.fromModule(modelModule);
+      const labelsAsset = Asset.fromModule(labelsModule);
+
+      // 3. FORCE DOWNLOAD (Kunci agar jalan di APK)
+      // Ini memaksa Expo menyalin file dari dalam APK ke folder Cache HP
+      await Promise.all([
+        modelAsset.downloadAsync(),
+        labelsAsset.downloadAsync()
       ]);
 
-      console.log("✅ Assets loaded");
-      console.log("📂 Model URI:", modelAsset.localUri);
-      console.log("📂 Labels URI:", labelsAsset.localUri);
-
+      // 4. Validasi apakah file benar-benar ada di cache
       if (!modelAsset.localUri || !labelsAsset.localUri) {
-        throw new Error("Asset URIs not available");
+        throw new Error("Gagal menyalin aset ke penyimpanan lokal (URI null).");
       }
 
-      // ✅ Load labels
-      const labelsContent = await FileSystem.readAsStringAsync(
-        labelsAsset.localUri
-      );
+      console.log("📂 Model Cache Path:", modelAsset.localUri);
+
+      // 5. Load Labels
+      const labelsContent = await FileSystem.readAsStringAsync(labelsAsset.localUri);
       const loadedLabels = labelsContent
-        .trim()
         .split("\n")
         .map((l) => l.trim())
         .filter((l) => l.length > 0);
 
       setLabels(loadedLabels);
-      console.log("✅ Labels loaded:", loadedLabels);
+      console.log(`✅ ${loadedLabels.length} Labels loaded`);
 
-      // // ✅ Load TFLite model
-      // const tfliteModel = await loadTensorflowModel(
-      //   { url: modelAsset.localUri },
-      //   (Platform.OS === "ios" ? "core-ml" : "gpu") as any
-      // ); 
-
+      // 6. Load TFLite Model
+      // Gunakan 'default' (CPU) untuk Android agar paling aman/stabil
+      // Gunakan 'core-ml' (NPU) untuk iOS agar ngebut
       const delegate: TensorflowModelDelegate = (Platform.OS === 'ios' ? 'core-ml' : 'default') as TensorflowModelDelegate;
       
+      // ✅ FIX: Delegate dipisah menjadi argumen kedua
       const tfliteModel = await loadTensorflowModel(
         { url: modelAsset.localUri },
-        delegate
+        delegate 
       );
-      
-      setModel(tfliteModel);
 
-      console.log("✅ TFLite model loaded successfully");
-      console.log(`🚀 Delegate: ${delegate}`);
-      
       setModel(tfliteModel);
-
-      console.log("✅ TFLite model loaded successfully");
-      console.log("✅ TFLite model loaded successfully");
-      console.log("📊 Model info:", {
-        inputShape: tfliteModel.inputs[0]?.shape,
-        outputShape: tfliteModel.outputs[0]?.shape,
-      });
+      console.log(`✅ Model loaded successfully using ${delegate} delegate!`);
+      
       setIsLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       console.error("❌ Model loading error:", err);
-      setError(err instanceof Error ? err.message : "Failed to load model");
+      setError(err.message || "Failed to load model");
       setIsLoading(false);
     }
   };

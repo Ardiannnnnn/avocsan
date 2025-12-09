@@ -2,7 +2,7 @@
   "avocadoTips": [
     {
       "icon": "leaf",
-      "text": "Alpukat mentah bisa matang dalam 2-5 hari di suhu ruang"
+      "text": "Alpukat mentah menjadi matang dalam 2-5 hari pada suhu ruangan"
     },
     {
       "icon": "snow",
@@ -10,11 +10,11 @@
     },
     {
       "icon": "restaurant",
-      "text": "Alpukat kaya akan lemak sehat omega-3 yang baik untuk jantung"
+      "text": "Alpukat kaya omega-3 yang baik untuk kesehatan jantung"
     },
     {
       "icon": "fitness",
-      "text": "Satu buah alpukat mengandung lebih banyak kalium daripada pisang"
+      "text": "Alpukat mengandung lebih banyak kalium dibanding pisang"
     },
     {
       "icon": "water",
@@ -22,7 +22,7 @@
     },
     {
       "icon": "time",
-      "text": "Alpukat matang sempurna ketika sedikit empuk saat ditekan"
+      "text": "Alpukat matang sempurna ditandai dengan empuk saat ditekan"
     },
     {
       "icon": "nutrition",
@@ -38,49 +38,49 @@
     },
     {
       "icon": "eye",
-      "text": "Lutein dalam alpukat melindungi kesehatan mata dari kerusakan"
+      "text": "Lutein dalam alpukat menjaga kesehatan mata"
     }
   ],
   "mlTips": [
     {
       "icon": "scan",
-      "text": "AI kami dilatih dengan 10,000+ gambar alpukat untuk akurasi tinggi"
+      "text": "Model Avoscan dilatih menggunakan 10,000+ citra alpukat"
     },
     {
       "icon": "flash",
-      "text": "Model YOLO11 dapat mendeteksi objek dalam waktu kurang dari 50ms"
+      "text": "Model YOLO11 mendeteksi alpukat dalam waktu <50ms"
     },
     {
       "icon": "hardware-chip",
-      "text": "TensorFlow Lite memungkinkan AI berjalan langsung di smartphone Anda"
+      "text": "TensorFlow Lite memungkinkan model dijalankan langsung via smartphone"
     },
     {
       "icon": "analytics",
-      "text": "Machine learning menganalisis warna, tekstur, dan bentuk untuk deteksi"
+      "text": "Machine learning mengekstrak fitur, warna, tekstur, dan bentuk alpukat"
     },
     {
       "icon": "bulb",
-      "text": "Neural network memiliki akurasi deteksi hingga 95% untuk kematangan alpukat"
+      "text": "Model Avoscan memiliki akurasi dalam menentukan kematangan alpukat hingga 95%"
     },
     {
       "icon": "git-network",
-      "text": "Deep learning memproses gambar melalui 50+ layer neural network"
-    },
-    {
-      "icon": "shield-checkmark",
-      "text": "Model AI divalidasi dengan cross-validation untuk memastikan konsistensi"
+      "text": "Resnet50 memproses citra melalui 50 layer neural network"
     },
     {
       "icon": "speedometer",
-      "text": "Inferensi real-time dioptimalkan untuk performa 60 FPS di kamera"
+      "text": "Inferensi real-time dioptimalkan untuk performa 60 FPS kamera"
     },
     {
       "icon": "cube",
-      "text": "Object detection menggunakan bounding box untuk lokalisasi presisi tinggi"
+      "text": "Object detection YOLO menggunakan bounding box untuk lokalisasi presisi tinggi"
     },
     {
       "icon": "code-working",
-      "text": "AI kami terus belajar dan berkembang dengan setiap gambar baru"
+      "text": "Model Avoscan dapat menentukan 5 kategori kematangan alpukat"
+    },
+    {
+      "icon": "code-working",
+      "text": "Model Avoscan telah dilatih menggunakan alpukat lokal di Aceh"
     }
   ]
 }

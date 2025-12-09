@@ -4,6 +4,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
+  Image,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -57,7 +58,7 @@ export default function HomeScreen() {
         serat: "Tinggi",
         kalori: "120",
       },
-      tips: "Simpan di suhu ruang",
+      tips: "Simpan pada suhu ruangan",
     },
     {
       id: 2,
@@ -126,8 +127,8 @@ export default function HomeScreen() {
       route: "/benefits/about" as const // ✅ ADD
     },
     {
-      icon: "⚖️",
-      title: "Magister Usk",
+      icon: "🤖",
+      title: "S2 AI FMIPA USK",
       color: "#10b981",
       route: "/benefits/magister" as const // ✅ ADD
     },  
@@ -139,7 +140,7 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* Hero Header */}
-        <View
+         <View
           className="bg-green-700 rounded-b-[40px]"
           style={{
             paddingHorizontal: isTablet ? 48 : 24,
@@ -147,16 +148,22 @@ export default function HomeScreen() {
             paddingBottom: isSmallDevice ? 80 : 96,
           }}
         >
-          <View className="items-center mb-4">
-            <Text
+          <View className="items-center">
+            {/* ✅ GANTI emoji dengan logo */}
+            <View
+              className=" rounded-3xl items-center justify-center"
               style={{
-                fontSize: isSmallDevice ? 48 : isTablet ? 80 : 60,
-                marginBottom: 8,
-                padding: 8,
+                width: isSmallDevice ? 164 : isTablet ? 196 : 80,
+                height: isSmallDevice ? 164 : isTablet ? 196 : 80,
+                padding: isSmallDevice ? 12 : isTablet ? 20 : 16,
               }}
             >
-              🥑
-            </Text>
+              <Image
+                source={require("../../assets/logoapp.png")}
+                style={{ width: "100%", height: "100%", resizeMode: "contain" }}
+              />
+            </View>
+
             <Text
               className="text-white text-center font-bold"
               style={{ fontSize: isSmallDevice ? 24 : isTablet ? 36 : 30 }}
@@ -208,7 +215,7 @@ export default function HomeScreen() {
                   className="text-green-100"
                   style={{ fontSize: isSmallDevice ? 12 : 14 }}
                 >
-                  Tekan untuk memulai scan
+                  Tekan untuk memulai
                 </Text>
               </View>
             </View>

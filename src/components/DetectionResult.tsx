@@ -17,10 +17,12 @@ import { router } from "expo-router";
 
 const { width, height: screenHeight } = Dimensions.get("window");
 const isSmallDevice = width < 375;
+const isMediumDevice = width >= 375 && width < 414;
+const isTablet = width >= 768;
 
-// ✅ DEFINE FIXED IMAGE DIMENSIONS
-const FIXED_IMAGE_WIDTH = width - 32; // Padding 16 each side
-const FIXED_IMAGE_HEIGHT = 400; // Fixed height
+// ✅ RESPONSIVE IMAGE DIMENSIONS
+const FIXED_IMAGE_WIDTH = width - 32;
+const FIXED_IMAGE_HEIGHT = isSmallDevice ? 300 : isMediumDevice ? 350 : isTablet ? 500 : 400;
 
 interface DetectionResultProps {
   photoUri: string;
@@ -135,18 +137,17 @@ export const DetectionResult = ({
           end={{ x: 1, y: 1 }}
           style={{
             paddingTop: insets.top + 20,
-            paddingHorizontal: 24,
+            paddingHorizontal: isTablet ? 40 : 24,
             paddingBottom: 32,
             borderBottomLeftRadius: 32,
             borderBottomRightRadius: 32,
           }}
         >
-          {/* ✅ IMPROVED: More engaging main result */}
           <View className="items-center">
-            {/* Emoji with subtle animation feel */}
+            {/* Responsive Emoji */}
             <Text
               style={{
-                fontSize: 80,
+                fontSize: isSmallDevice ? 60 : isMediumDevice ? 70 : isTablet ? 100 : 80,
                 marginBottom: 12,
                 textShadowColor: "rgba(0,0,0,0.1)",
                 textShadowOffset: { width: 0, height: 2 },
@@ -156,53 +157,86 @@ export const DetectionResult = ({
               {classInfo.emoji}
             </Text>
 
-            {/* ✅ NEW: Contextual headline */}
-            <Text className="text-white/90 text-sm font-medium text-center mb-1 tracking-wide uppercase">
-              Hasil Deteksi AI
+            {/* Responsive headline */}
+            <Text 
+              className="text-white/90 font-medium text-center mb-1 tracking-wide uppercase"
+              style={{ fontSize: isSmallDevice ? 11 : 12 }}
+            >
+              Hasil Deteksi Avoscan Model
             </Text>
 
-            {/* Main classification */}
+            {/* Responsive main classification */}
             <Text
-              className="text-white text-4xl font-black text-center mb-3"
-              style={{ letterSpacing: 0.5 }}
+              className="text-white font-black text-center mb-3"
+              style={{ 
+                fontSize: isSmallDevice ? 28 : isMediumDevice ? 32 : isTablet ? 44 : 36,
+                letterSpacing: 0.5 
+              }}
             >
               {classInfo.stage}
             </Text>
 
-            {/* ✅ IMPROVED: More descriptive confidence display */}
+            {/* Responsive confidence display */}
             <View className="bg-white/25 backdrop-blur-sm px-5 py-2.5 rounded-full flex-row items-center">
               <View className="bg-white/30 rounded-full p-1 mr-2">
-                <Ionicons name="checkmark-circle" size={16} color="white" />
+                <Ionicons 
+                  name="checkmark-circle" 
+                  size={isSmallDevice ? 14 : 16} 
+                  color="white" 
+                />
               </View>
-              <Text className="text-white font-bold text-base">
+              <Text 
+                className="text-white font-bold"
+                style={{ fontSize: isSmallDevice ? 14 : 16 }}
+              >
                 Akurasi {Math.round(detection.confidence * 100)}%
               </Text>
             </View>
           </View>
 
-          {/* ✅ IMPROVED: Enhanced info pills with better copy */}
+          {/* Responsive info pills */}
           <View className="flex-row justify-center mt-6 gap-2 flex-wrap">
             <View className="bg-white/20 backdrop-blur-sm px-4 py-2.5 rounded-full flex-row items-center">
-              <Ionicons name="calendar-outline" size={16} color="white" />
-              <Text className="text-white font-semibold ml-2 text-sm">
+              <Ionicons 
+                name="calendar-outline" 
+                size={isSmallDevice ? 14 : 16} 
+                color="white" 
+              />
+              <Text 
+                className="text-white font-semibold ml-2"
+                style={{ fontSize: isSmallDevice ? 12 : 14 }}
+              >
                 Tahan {classInfo.shelfLife}
               </Text>
             </View>
 
             {allDetections.length > 1 && (
               <View className="bg-white/20 backdrop-blur-sm px-4 py-2.5 rounded-full flex-row items-center">
-                <Ionicons name="scan-outline" size={16} color="white" />
-                <Text className="text-white font-semibold ml-2 text-sm">
+                <Ionicons 
+                  name="scan-outline" 
+                  size={isSmallDevice ? 14 : 16} 
+                  color="white" 
+                />
+                <Text 
+                  className="text-white font-semibold ml-2"
+                  style={{ fontSize: isSmallDevice ? 12 : 14 }}
+                >
                   {allDetections.length} Alpukat Terdeteksi
                 </Text>
               </View>
             )}
 
-            {/* ✅ NEW: Add quality indicator */}
             {detection.confidence >= 0.8 && (
               <View className="bg-white/20 backdrop-blur-sm px-4 py-2.5 rounded-full flex-row items-center">
-                <Ionicons name="star" size={16} color="white" />
-                <Text className="text-white font-semibold ml-2 text-sm">
+                <Ionicons 
+                  name="star" 
+                  size={isSmallDevice ? 14 : 16} 
+                  color="white" 
+                />
+                <Text 
+                  className="text-white font-semibold ml-2"
+                  style={{ fontSize: isSmallDevice ? 12 : 14 }}
+                >
                   Deteksi Akurat
                 </Text>
               </View>
@@ -210,25 +244,44 @@ export const DetectionResult = ({
           </View>
         </LinearGradient>
 
-        {/* ✅ IMPROVED: More engaging info cards */}
-        <View className="px-4 py-6 bg-white mt-4 mx-4 rounded-3xl shadow-sm border border-gray-100">
+        {/* Responsive info cards */}
+        <View 
+          className="py-6 bg-white mt-4 rounded-3xl shadow-sm border border-gray-100"
+          style={{
+            marginHorizontal: isTablet ? 40 : 16,
+            paddingHorizontal: isTablet ? 32 : 16,
+          }}
+        >
           {/* What to do section */}
           <View className="mb-5">
             <View className="flex-row items-center mb-3">
               <View className="bg-gradient-to-br from-green-400 to-green-600 p-2.5 rounded-xl shadow-sm">
-                <Ionicons name="leaf" size={22} color="white" />
+                <Ionicons 
+                  name="leaf" 
+                  size={isSmallDevice ? 18 : isTablet ? 26 : 22} 
+                  color="white" 
+                />
               </View>
               <View className="ml-3 flex-1">
-                <Text className="text-gray-800 font-bold text-lg">
+                <Text 
+                  className="text-gray-800 font-bold"
+                  style={{ fontSize: isSmallDevice ? 16 : isTablet ? 20 : 18 }}
+                >
                   Cara Terbaik Menikmati
                 </Text>
-                <Text className="text-gray-500 text-xs mt-0.5">
-                  Rekomendasi untuk Anda
+                <Text 
+                  className="text-gray-500 mt-0.5"
+                  style={{ fontSize: isSmallDevice ? 10 : 12 }}
+                >
+                  Rekomendasi:
                 </Text>
               </View>
             </View>
             <View className="bg-green-50 rounded-2xl p-4 border-l-4 border-green-500">
-              <Text className="text-gray-700 text-base leading-6 font-medium">
+              <Text 
+                className="text-gray-700 leading-6 font-medium"
+                style={{ fontSize: isSmallDevice ? 14 : 15 }}
+              >
                 {classInfo.recommendation}
               </Text>
             </View>
@@ -247,38 +300,64 @@ export const DetectionResult = ({
           <View>
             <View className="flex-row items-center mb-3">
               <View className="bg-gradient-to-br from-blue-400 to-blue-600 p-2.5 rounded-xl shadow-sm">
-                <Ionicons name="book" size={22} color="white" />
+                <Ionicons 
+                  name="book" 
+                  size={isSmallDevice ? 18 : isTablet ? 26 : 22} 
+                  color="white" 
+                />
               </View>
               <View className="ml-3 flex-1">
-                <Text className="text-gray-800 font-bold text-lg">
+                <Text 
+                  className="text-gray-800 font-bold"
+                  style={{ fontSize: isSmallDevice ? 16 : isTablet ? 20 : 18 }}
+                >
                   Tentang Tingkat Kematangan
                 </Text>
-                <Text className="text-gray-500 text-xs mt-0.5">
+                <Text 
+                  className="text-gray-500 mt-0.5"
+                  style={{ fontSize: isSmallDevice ? 10 : 12 }}
+                >
                   Penjelasan Detail
                 </Text>
               </View>
             </View>
             <View className="bg-blue-50 rounded-2xl p-4 border-l-4 border-blue-500">
-              <Text className="text-gray-700 text-base leading-6 font-medium">
+              <Text 
+                className="text-gray-700 leading-6 font-medium"
+                style={{ fontSize: isSmallDevice ? 14 : 15 }}
+              >
                 {classInfo.description}
               </Text>
             </View>
           </View>
         </View>
 
-        {/* ✅ FIXED-SIZE IMAGE VIEW */}
-        <View className="px-4 mt-6">
+        {/* Image section */}
+        <View 
+          className="mt-6"
+          style={{ paddingHorizontal: isTablet ? 40 : 16 }}
+        >
           <View className="flex-row items-center justify-between mb-3">
-            <Text className="text-gray-800 font-bold text-lg">Hasil Foto</Text>
+            <Text 
+              className="text-gray-800 font-bold"
+              style={{ fontSize: isSmallDevice ? 16 : isTablet ? 20 : 18 }}
+            >
+              Hasil Foto
+            </Text>
             {allDetections.length > 1 && (
               <View className="flex-row items-center">
                 <View className="w-3 h-3 rounded-full bg-green-500 mr-1" />
-                <Text className="text-gray-500 text-sm">= Objek terpilih</Text>
+                <Text 
+                  className="text-gray-500"
+                  style={{ fontSize: isSmallDevice ? 12 : 13 }}
+                >
+                  = Objek terpilih
+                </Text>
               </View>
             )}
           </View>
 
-          {/* ✅ FIXED CONTAINER with specified dimensions */}
+          {/* RESPONSIVE IMAGE CONTAINER */}
           <View
             className="bg-white rounded-3xl overflow-hidden shadow-lg"
             style={{
@@ -368,20 +447,24 @@ export const DetectionResult = ({
               })}
           </View>
 
-          {/* Image Info */}
-          <View className="flex-row items-center justify-center mt-3 gap-4">
+          {/* Responsive Image Info */}
+          <View className="flex-row items-center justify-center mt-3 gap-4 flex-wrap">
             <View className="flex-row items-center">
-              <Ionicons name="camera-outline" size={16} color="#9ca3af" />
-              <Text className="text-gray-500 text-xs ml-1">High Quality</Text>
+              <Ionicons name="camera-outline" size={14} color="#9ca3af" />
+              <Text 
+                className="text-gray-500 ml-1"
+                style={{ fontSize: isSmallDevice ? 10 : 12 }}
+              >
+                High Quality
+              </Text>
             </View>
             <View className="flex-row items-center">
-              <Ionicons name="scan-outline" size={16} color="#9ca3af" />
-              <Text className="text-gray-500 text-xs ml-1">AI Analyzed</Text>
-            </View>
-            <View className="flex-row items-center">
-              <Ionicons name="resize-outline" size={16} color="#9ca3af" />
-              <Text className="text-gray-500 text-xs ml-1">
-                {FIXED_IMAGE_WIDTH}×{FIXED_IMAGE_HEIGHT}
+              <Ionicons name="scan-outline" size={14} color="#9ca3af" />
+              <Text 
+                className="text-gray-500 ml-1"
+                style={{ fontSize: isSmallDevice ? 10 : 12 }}
+              >
+                AI Analyzed
               </Text>
             </View>
           </View>
@@ -444,12 +527,12 @@ export const DetectionResult = ({
         <View className="h-6" />
       </ScrollView>
 
-      {/* ✅ FLOATING ACTION BUTTONS */}
+      {/* RESPONSIVE FLOATING BUTTONS */}
       <View
         style={{
           paddingBottom: insets.bottom + 16,
           paddingTop: 12,
-          paddingHorizontal: 20,
+          paddingHorizontal: isTablet ? 40 : 20,
           shadowColor: "#000",
           shadowOffset: { width: 0, height: -4 },
           shadowOpacity: 0.1,
@@ -461,28 +544,44 @@ export const DetectionResult = ({
         <View className="flex-row gap-3">
           <TouchableOpacity
             onPress={onRetake}
-            className="flex-1 bg-gray-100 py-4 rounded-2xl border-2 border-gray-300"
+            className="flex-1 bg-gray-100 rounded-2xl border-2 border-gray-300"
+            style={{ paddingVertical: isSmallDevice ? 14 : 16 }}
             activeOpacity={0.7}
           >
             <View className="flex-row items-center justify-center">
-              <Ionicons name="camera" size={22} color="#374151" />
-              <Text className="text-gray-800 font-bold text-center text-base ml-2">
+              <Ionicons 
+                name="camera" 
+                size={isSmallDevice ? 18 : isTablet ? 24 : 22} 
+                color="#374151" 
+              />
+              <Text 
+                className="text-gray-800 font-bold text-center ml-2"
+                style={{ fontSize: isSmallDevice ? 14 : isTablet ? 18 : 16 }}
+              >
                 Scan Ulang
               </Text>
             </View>
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={onClose}
+            onPress={handleFinish}
             style={{
               backgroundColor: getGradientColors()[0],
+              paddingVertical: isSmallDevice ? 14 : 16,
             }}
-            className="flex-1 py-4 rounded-2xl shadow-lg"
+            className="flex-1 rounded-2xl shadow-lg"
             activeOpacity={0.7}
           >
             <View className="flex-row items-center justify-center">
-              <Ionicons name="checkmark-circle" size={22} color="white" />
-              <Text onPress={handleFinish} className="text-white font-bold text-center text-base ml-2">
+              <Ionicons 
+                name="checkmark-circle" 
+                size={isSmallDevice ? 18 : isTablet ? 24 : 22} 
+                color="white" 
+              />
+              <Text 
+                className="text-white font-bold text-center ml-2"
+                style={{ fontSize: isSmallDevice ? 14 : isTablet ? 18 : 16 }}
+              >
                 Selesai
               </Text>
             </View>
