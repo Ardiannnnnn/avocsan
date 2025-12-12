@@ -29,7 +29,7 @@ export function useInferenceLoop({
   onDetectionsUpdate,
   onStatsUpdate,
   // ✅ PERBAIKAN 4: Default Threshold Tinggi (0.75) agar AI tidak halusinasi
-  confidenceThreshold = 0.75, 
+  confidenceThreshold = 0.6, 
 }: UseInferenceLoopProps) {
   const scanLoopActive = useRef(false);
   const lastFrameTime = useRef(Date.now());

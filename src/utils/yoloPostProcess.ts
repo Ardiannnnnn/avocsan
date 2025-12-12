@@ -53,7 +53,7 @@ export function parseYOLOOutput(
   output: Float32Array,
   labels: string[],
   inputSize: number, // 640
-  confidenceThreshold: number = 0.5,
+  confidenceThreshold: number = 0.6,
   iouThreshold: number = 0.5
 ): Detection[] {
   "worklet";

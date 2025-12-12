@@ -1,9 +1,9 @@
 export const CLASS_COLORS: Record<string, string> = {
-  Mentah: "#00FF00",
-  Mengkal: "#FFFF00",
-  Matang: "#FFA500",
-  Sangat_Matang: "#FF0000",
-  Busuk: "#8B0000"
+  "Belum Matang": "#22c55e",  // Green - fresh
+  "Mulai Matang": "#eab308",  // Yellow - ripening
+  "Matang": "#f59e0b",         // Orange - ripe
+  "Matang Sempurna": "#f97316", // Deep orange - perfect
+  "Terlalu Matang": "#ef4444"  // Red - overripe
 };
 
 export function getColorForClass(

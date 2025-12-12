@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "AvoScan",
-    "slug": "avocado",
+    "slug": "avocado", 
     "version": "1.0.0",
     "scheme": "acme",
     "userInterfaceStyle": "automatic",
@@ -14,26 +14,29 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ardi_expo.avocado",
+      "bundleIdentifier": "com.ardiexpo.avocado",
       "infoPlist": {
         "NSCameraUsageDescription": "Aplikasi membutuhkan akses kamera untuk mendeteksi alpukat."
       }
     },
     "android": {
       "package": "com.ardi_expo.avocado",
-      "minSdkVersion": 26,
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/logobaru.png",
         "backgroundColor": "#FFFFFF"
       },
-      "permissions": ["android.permission.CAMERA"]
+      "permissions": [
+        "android.permission.CAMERA"
+      ]
     },
-
     "web": {
       "output": "static",
       "bundler": "metro"
     },
-    "assetBundlePatterns": ["**/*", "assets/**/*", "assets/models/*"],
+    "assetBundlePatterns": [
+      "**/*", "assets/**/*", "assets/models/*"
+    ],
     "plugins": [
       [
         "expo-router",

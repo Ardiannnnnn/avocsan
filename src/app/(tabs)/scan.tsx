@@ -136,7 +136,7 @@ export default function ScanScreen() {
       setFps(newFps);
       setInferenceTime(newInferenceTime);
     },
-    confidenceThreshold: 0.65,
+    confidenceThreshold: 0.6,
   });
 
   // ✅ UPDATED: Manual capture with loading state

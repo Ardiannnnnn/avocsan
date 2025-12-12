@@ -114,15 +114,15 @@ export const DetectionResult = ({
 
   const getGradientColors = (): [string, string] => {
     switch (classInfo.label) {
-      case "Mentah":
+      case "Belum Matang":
         return ["#22c55e", "#16a34a"];
-      case "Mengkal":
+      case "Mulai Matang":
         return ["#eab308", "#ca8a04"];
       case "Matang":
         return ["#f59e0b", "#d97706"];
-      case "Sangat Matang":
+      case "Matang Sempurna":
         return ["#f97316", "#ea580c"];
-      case "Busuk":
+      case "Terlalu Matang":
         return ["#ef4444", "#dc2626"];
       default:
         return ["#10b981", "#059669"];
