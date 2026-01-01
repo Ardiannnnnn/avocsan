@@ -140,7 +140,7 @@ export default function HistoryScreen() {
           </Text>
           <Text
             className="text-gray-600 leading-6 mb-3"
-            style={{ fontSize: isSmallDevice ? 14 : 16 }}
+            style={{ fontSize: isSmallDevice ? 14 : 16,  textAlign: 'justify' }}
           >
             Nama "avocado" berasal dari kata Aztec "ahuacatl" yang berarti "testis" karena 
             bentuknya yang unik. Buah ini telah menjadi makanan pokok suku Aztec dan Maya 
@@ -148,7 +148,7 @@ export default function HistoryScreen() {
           </Text>
           <Text
             className="text-gray-600 leading-6"
-            style={{ fontSize: isSmallDevice ? 14 : 16 }}
+            style={{ fontSize: isSmallDevice ? 14 : 16,  textAlign: 'justify' }}
           >
             Alpukat tidak hanya dihargai karena rasanya yang lezat, tetapi juga karena 
             nilai gizinya yang tinggi dan kemampuannya untuk tumbuh di berbagai iklim.

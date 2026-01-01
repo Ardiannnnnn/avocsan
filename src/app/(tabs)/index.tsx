@@ -47,10 +47,10 @@ export default function HomeScreen() {
   const ripenessStages = [
     {
       id: 1,
-      stage: "Mentah",
+      stage: "Belum Matang",
       emoji: "🟢",
-      bgColor: "#10b981",
-      lightBg: "#d1fae5",
+      bgColor: "#22c55e",
+      lightBg: "#dcfce7",
       days: "5-7 hari",
       texture: "Keras",
       nutrisi: {
@@ -62,10 +62,10 @@ export default function HomeScreen() {
     },
     {
       id: 2,
-      stage: "Setengah Matang",
+      stage: "Mulai Matang",
       emoji: "🟡",
-      bgColor: "#84cc16",
-      lightBg: "#ecfccb",
+      bgColor: "#eab308",
+      lightBg: "#fef9c3",
       days: "2-3 hari",
       texture: "Agak Lunak",
       nutrisi: {
@@ -73,37 +73,52 @@ export default function HomeScreen() {
         serat: "Tinggi",
         kalori: "140",
       },
-      tips: "Cocok untuk salad",
+      tips: "Diamkan 1-2 hari lagi",
     },
     {
       id: 3,
-      stage: "Matang Sempurna",
+      stage: "Matang",
       emoji: "🟠",
       bgColor: "#f59e0b",
       lightBg: "#fef3c7",
-      days: "Siap santap",
+      days: "1-2 hari",
       texture: "Lembut",
       nutrisi: {
         lemak: "Tinggi",
         serat: "Maksimal",
         kalori: "160",
       },
-      tips: "Terbaik untuk smoothie",
+      tips: "Siap dikonsumsi",
     },
     {
       id: 4,
-      stage: "Terlalu Matang",
+      stage: "Matang Sempurna",
       emoji: "🟤",
-      bgColor: "#78716c",
-      lightBg: "#e7e5e4",
-      days: "Segera habiskan",
+      bgColor: "#f97316",
+      lightBg: "#ffedd5",
+      days: "< 1 hari",
+      texture: "Sangat Lembut",
+      nutrisi: {
+        lemak: "Tinggi",
+        serat: "Optimal",
+        kalori: "165",
+      },
+      tips: "Konsumsi segera, ideal untuk smoothie",
+    },
+    {
+      id: 5,
+      stage: "Terlalu Matang",
+      emoji: "⚫",
+      bgColor: "#ef4444",
+      lightBg: "#fee2e2",
+      days: "Sudah melewati masa simpan",
       texture: "Sangat Lembek",
       nutrisi: {
         lemak: "Tinggi",
         serat: "Berkurang",
         kalori: "150",
       },
-      tips: "Pakai untuk masker",
+      tips: "Cek bagian yang masih layak konsumsi",
     },
   ];
 
@@ -112,35 +127,33 @@ export default function HomeScreen() {
       icon: "❤️",
       title: "Avocado Untuk kesehatan",
       color: "#ef4444",
-      route: "/benefits/health" as const  // ✅ ADD
+      route: "/benefits/health" as const, // ✅ ADD
     },
     {
       icon: "💡",
       title: "Sejarah Avocado",
       color: "#f59e0b",
-      route: "/benefits/history" as const // ✅ ADD
+      route: "/benefits/history" as const, // ✅ ADD
     },
     {
       icon: "🔍",
-      title: "About",
+      title: "Tentang Aplikasi",
       color: "#3b82f6",
-      route: "/benefits/about" as const // ✅ ADD
+      route: "/benefits/about" as const, // ✅ ADD
     },
     {
       icon: "🤖",
       title: "S2 AI FMIPA USK",
       color: "#10b981",
-      route: "/benefits/magister" as const // ✅ ADD
-    },  
+      route: "/benefits/magister" as const, // ✅ ADD
+    },
   ];
 
   return (
     <View className="flex-1 bg-gray-50">
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-      >
+      <ScrollView showsVerticalScrollIndicator={false}>
         {/* Hero Header */}
-         <View
+        <View
           className="bg-green-700 rounded-b-[40px]"
           style={{
             paddingHorizontal: isTablet ? 48 : 24,
@@ -283,7 +296,7 @@ export default function HomeScreen() {
                 className="text-green-700 font-semibold"
                 style={{ fontSize: isSmallDevice ? 10 : 12 }}
               >
-                4 Level
+                5 Level
               </Text>
             </View>
           </View>
@@ -509,8 +522,7 @@ export default function HomeScreen() {
                   key={index}
                   className="flex-row items-start"
                   style={{
-                    marginBottom:
-                      index < displayedProTips.length - 1 ? 12 : 0,
+                    marginBottom: index < displayedProTips.length - 1 ? 12 : 0,
                   }}
                 >
                   <Text className="text-amber-600 mr-2 mt-1">▸</Text>

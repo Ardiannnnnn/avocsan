@@ -93,7 +93,7 @@ export default function HealthScreen() {
           </Text>
           <Text
             className="text-gray-600 leading-6"
-            style={{ fontSize: isSmallDevice ? 14 : 16 }}
+            style={{ fontSize: isSmallDevice ? 14 : 16,  textAlign: "justify" }}
           >
             Alpukat dikenal sebagai salah satu buah paling bergizi di dunia. 
             Mengandung lebih dari 20 vitamin dan mineral penting yang dibutuhkan tubuh setiap hari.
@@ -121,8 +121,8 @@ export default function HealthScreen() {
         <View
           style={{
             maxWidth: isTablet ? 800 : undefined,
-            alignSelf: isTablet ? 'center' : 'auto',
-            width: '100%',
+            alignSelf: isTablet ? "center" : "auto",
+            width: "100%", 
           }}
         >
           {displayedBenefits.map((benefit, index) => (

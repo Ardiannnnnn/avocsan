@@ -255,13 +255,13 @@ export default function SplashScreen() {
                   className="text-white/70 text-center"
                   style={{ fontSize: isSmallDevice ? 10 : 12 }}
                 >
-                  Universitas Syiah Kuala
+                  Departemen Informatika
                 </Text>
                 <Text
                   className="text-white/70 text-center mt-1"
                   style={{ fontSize: isSmallDevice ? 10 : 12 }}
                 >
-                  Fakultas MIPA • Informatika
+                  FMIPA ▪︎ Universitas Syiah Kuala
                 </Text>
               </View>
             </View>

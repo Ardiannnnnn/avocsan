@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Linking,
+  Image,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -69,7 +70,19 @@ export default function AboutScreen() {
         </View>
 
         <View className="items-center">
-          <Text style={{ fontSize: 80, marginBottom: 12 }}>🥑</Text>
+          <View
+            className=" rounded-3xl items-center justify-center"
+            style={{
+              width: isSmallDevice ? 164 : isTablet ? 196 : 80,
+              height: isSmallDevice ? 164 : isTablet ? 196 : 80,
+              padding: isSmallDevice ? 12 : isTablet ? 20 : 16,
+            }}
+          >
+            <Image
+              source={require("../../assets/logoapp.png")}
+              style={{ width: "100%", height: "100%", resizeMode: "contain" }}
+            />
+          </View>
           <Text
             className="text-white font-bold mb-2"
             style={{ fontSize: isSmallDevice ? 24 : isTablet ? 32 : 28 }}
@@ -99,7 +112,7 @@ export default function AboutScreen() {
           </Text>
           <Text
             className="text-gray-600 leading-6 mb-3"
-            style={{ fontSize: isSmallDevice ? 14 : 16 }}
+            style={{ fontSize: isSmallDevice ? 14 : 16, textAlign: "justify" }}
           >
             Avocado Scanner adalah aplikasi mobile berbasis kecerdasan buatan
             yang membantu Anda mendeteksi tingkat kematangan alpukat secara
@@ -107,7 +120,7 @@ export default function AboutScreen() {
           </Text>
           <Text
             className="text-gray-600 leading-6"
-            style={{ fontSize: isSmallDevice ? 14 : 16 }}
+            style={{ fontSize: isSmallDevice ? 14 : 16, textAlign: "justify" }}
           >
             Dikembangkan menggunakan teknologi YOLOv8 dan TensorFlow Lite,
             aplikasi ini memberikan hasil deteksi real-time langsung dari kamera
@@ -180,28 +193,6 @@ export default function AboutScreen() {
               <Text className="text-gray-700">TensorFlow Lite</Text>
             </View>
           </View>
-        </View>
-
-        {/* Developer */}
-        <View className="bg-white rounded-3xl p-6 shadow-sm">
-          <Text
-            className="font-bold text-gray-800 mb-4 text-center"
-            style={{ fontSize: isSmallDevice ? 16 : isTablet ? 20 : 18 }}
-          >
-            Dikembangkan oleh
-          </Text>
-          <Text
-            className="text-gray-600 text-center mb-2"
-            style={{ fontSize: isSmallDevice ? 14 : 16 }}
-          >
-            Program Studi Magister Informatika
-          </Text>
-          <Text
-            className="text-gray-600 text-center font-semibold"
-            style={{ fontSize: isSmallDevice ? 14 : 16 }}
-          >
-            Universitas Syiah Kuala
-          </Text>
         </View>
       </ScrollView>
     </View>

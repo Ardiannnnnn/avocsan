@@ -21,12 +21,12 @@
     },
     "android": {
       "package": "com.ardi_expo.avocado",
-      "versionCode": 3,
+      "versionCode": 4,
       "adaptiveIcon": {
         "foregroundImage": "./assets/logobaru.png",
         "backgroundColor": "#FFFFFF"
       },
-      "permissions": [
+      "permissions": [ 
         "android.permission.CAMERA"
       ]
     },

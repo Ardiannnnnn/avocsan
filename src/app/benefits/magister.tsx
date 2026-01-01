@@ -1,9 +1,15 @@
-import { View, Text, ScrollView, TouchableOpacity, Dimensions, Linking } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Dimensions,
+  Linking,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Image } from "react-native";
-
 
 const { width } = Dimensions.get("window");
 const isSmallDevice = width < 375;
@@ -14,24 +20,19 @@ export default function MagisterScreen() {
   const insets = useSafeAreaInsets();
 
   const openWebsite = () => {
-    Linking.openURL('https://informatika.usk.ac.id/webinf/?p=4086');
+    Linking.openURL("https://informatika.usk.ac.id/webinf/?p=4086");
   };
 
   const programs = [
     {
       icon: "🎓",
-      title: "Magister Informatika USK",
-      desc: "Program studi yang fokus pada pengembangan ilmu dan teknologi informasi",
+      title: "Magister Kecerdasan Buatan",
+      desc: "Program pendidikan pascasarjana yang menghasilkan talenta unggul dalam menganalisis dan memecahkan masalah menggunakan teknologi AI",
     },
     {
       icon: "🔬",
       title: "Riset & Inovasi",
-      desc: "Penelitian di bidang AI, Machine Learning, dan Computer Vision",
-    },
-    {
-      icon: "🏆",
-      title: "Akreditasi Unggul",
-      desc: "Terakreditasi BAN-PT dengan predikat Unggul",
+      desc: "Penelitian dalam berbagai bidang diantaranya dengan NLP, Machine Learning, Deep Learning, dan Computer Vision",
     },
   ];
 
@@ -71,14 +72,14 @@ export default function MagisterScreen() {
 
         <View className="items-center">
           <View className="bg-white rounded-3xl p-6 mb-4">
-          <Image
-            source={require('../../assets/logosuk.png')}
-            style={{
-              width: isSmallDevice ? 80 : isTablet ? 120 : 100,
-              height: isSmallDevice ? 80 : isTablet ? 120 : 100,
-              resizeMode: 'contain',
-            }}
-          />
+            <Image
+              source={require("../../assets/logosuk.png")}
+              style={{
+                width: isSmallDevice ? 80 : isTablet ? 120 : 100,
+                height: isSmallDevice ? 80 : isTablet ? 120 : 100,
+                resizeMode: "contain",
+              }}
+            />
           </View>
           <Text
             className="text-white font-bold text-center mb-2"
@@ -90,7 +91,7 @@ export default function MagisterScreen() {
             className="text-green-100 text-center"
             style={{ fontSize: isSmallDevice ? 13 : 15 }}
           >
-            Fakultas MIPA • Program Magister Informatika
+            FMIPA • Program Magister Kecerdasan Buatan
           </Text>
         </View>
       </View>
@@ -112,12 +113,13 @@ export default function MagisterScreen() {
           </Text>
           <Text
             className="text-gray-600 leading-6"
-            style={{ fontSize: isSmallDevice ? 14 : 16 }}
+            style={{ fontSize: isSmallDevice ? 14 : 16, textAlign: "justify" }}
           >
-            Program Studi Magister Informatika Universitas Syiah Kuala 
-            merupakan program pendidikan pascasarjana yang berfokus pada pengembangan 
-            kompetensi di bidang teknologi informasi, khususnya dalam penerapan 
-            kecerdasan buatan, pengolahan data, dan sistem informasi.
+            Program Magister Kecerdasan Buatan (AI) FMIPA USK adalah program
+            pendidikan pascasarjana yang menghasilkan lulusan unggul dan berdaya
+            saing yang mampu menganalisis serta memecahkan masalah dengan
+            memanfaatkan teknologi AI dan mempersiapkan talenta AI terampil
+            untuk masa depan.
           </Text>
         </View>
 
@@ -132,8 +134,8 @@ export default function MagisterScreen() {
         <View
           style={{
             maxWidth: isTablet ? 800 : undefined,
-            alignSelf: isTablet ? 'center' : 'auto',
-            width: '100%',
+            alignSelf: isTablet ? "center" : "auto",
+            width: "100%",
           }}
         >
           {programs.map((program, index) => (
@@ -154,7 +156,11 @@ export default function MagisterScreen() {
                   </Text>
                   <Text
                     className="text-gray-600"
-                    style={{ fontSize: isSmallDevice ? 13 : 15 }}
+                    style={{
+                      fontSize: isSmallDevice ? 13 : 15,
+                      textAlign: "left",
+                      lineHeight: isSmallDevice ? 20 : 22,
+                    }}
                   >
                     {program.desc}
                   </Text>
@@ -165,12 +171,12 @@ export default function MagisterScreen() {
         </View>
 
         {/* Achievements */}
-        <View className="bg-green-50 rounded-3xl p-6 mb-6 border-2 border-green-200">
+        <View className="bg-green-50 rounded-3xl mt-4 p-6 mb-6 border-2 border-green-200">
           <Text
             className="font-bold text-gray-800 mb-4"
             style={{ fontSize: isSmallDevice ? 16 : isTablet ? 20 : 18 }}
           >
-            Prestasi & Pencapaian
+            Prestasi dan Capaian
           </Text>
           {achievements.map((achievement, index) => (
             <View key={index} className="flex-row items-start mb-3">
@@ -203,22 +209,6 @@ export default function MagisterScreen() {
             </Text>
           </View>
         </TouchableOpacity>
-
-        {/* Footer */}
-        <View className="items-center mt-6">
-          <Text
-            className="text-gray-500 text-center"
-            style={{ fontSize: isSmallDevice ? 11 : 13 }}
-          >
-            Jl. Tgk. Syech Abdurrauf No. 7, Darussalam
-          </Text>
-          <Text
-            className="text-gray-500 text-center"
-            style={{ fontSize: isSmallDevice ? 11 : 13 }}
-          >
-            Banda Aceh 23111, Indonesia
-          </Text>
-        </View>
       </ScrollView>
     </View>
   );
