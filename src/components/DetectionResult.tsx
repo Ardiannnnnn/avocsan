@@ -78,37 +78,59 @@ export const DetectionResult = ({
       return { left: 0, top: 0, width: 0, height: 0 };
     }
 
-    // Calculate how image is displayed in fixed container
+    // Original image aspect ratio
     const imageAspectRatio =
-      originalImageDimensions.height / originalImageDimensions.width;
-    const containerAspectRatio = FIXED_IMAGE_HEIGHT / FIXED_IMAGE_WIDTH;
+      originalImageDimensions.width / originalImageDimensions.height;
+    const containerAspectRatio = FIXED_IMAGE_WIDTH / FIXED_IMAGE_HEIGHT;
 
     let displayedImageWidth: number;
     let displayedImageHeight: number;
-    let offsetX = 0;
-    let offsetY = 0;
+    let cropOffsetX = 0;
+    let cropOffsetY = 0;
 
+    // resizeMode="cover" behavior: image fills container, may be cropped
     if (imageAspectRatio > containerAspectRatio) {
-      // Image is taller, will be cropped top/bottom (cover height)
+      // Image is wider than container - height fills, sides cropped
       displayedImageHeight = FIXED_IMAGE_HEIGHT;
-      displayedImageWidth = FIXED_IMAGE_HEIGHT / imageAspectRatio;
-      offsetX = (FIXED_IMAGE_WIDTH - displayedImageWidth) / 2;
+      displayedImageWidth = FIXED_IMAGE_HEIGHT * imageAspectRatio;
+      cropOffsetX = (displayedImageWidth - FIXED_IMAGE_WIDTH) / 2;
     } else {
-      // Image is wider, will be cropped left/right (cover width)
+      // Image is taller than container - width fills, top/bottom cropped
       displayedImageWidth = FIXED_IMAGE_WIDTH;
-      displayedImageHeight = FIXED_IMAGE_WIDTH * imageAspectRatio;
-      offsetY = (FIXED_IMAGE_HEIGHT - displayedImageHeight) / 2;
+      displayedImageHeight = FIXED_IMAGE_WIDTH / imageAspectRatio;
+      cropOffsetY = (displayedImageHeight - FIXED_IMAGE_HEIGHT) / 2;
     }
 
-    // Scale from screen coordinates to displayed image coordinates
-    const scaleX = displayedImageWidth / width;
-    const scaleY = displayedImageHeight / screenHeight;
+    // Detection bbox is in SCREEN coordinates (from camera preview)
+    // We need to map: screen coords → original image coords → display coords
+    
+    // Step 1: Scale from screen to original image coordinates
+    const scaleScreenToImageX = originalImageDimensions.width / width;
+    const scaleScreenToImageY = originalImageDimensions.height / screenHeight;
+    
+    const imageX = det.bbox[0] * scaleScreenToImageX;
+    const imageY = det.bbox[1] * scaleScreenToImageY;
+    const imageW = det.bbox[2] * scaleScreenToImageX;
+    const imageH = det.bbox[3] * scaleScreenToImageY;
+    
+    // Step 2: Scale from original image to displayed size (before crop)
+    const scaleImageToDisplayX = displayedImageWidth / originalImageDimensions.width;
+    const scaleImageToDisplayY = displayedImageHeight / originalImageDimensions.height;
+    
+    const displayX = imageX * scaleImageToDisplayX;
+    const displayY = imageY * scaleImageToDisplayY;
+    const displayW = imageW * scaleImageToDisplayX;
+    const displayH = imageH * scaleImageToDisplayY;
+    
+    // Step 3: Apply crop offset (because of resizeMode="cover")
+    const finalX = displayX - cropOffsetX;
+    const finalY = displayY - cropOffsetY;
 
     return {
-      left: det.bbox[0] * scaleX + offsetX,
-      top: det.bbox[1] * scaleY + offsetY,
-      width: det.bbox[2] * scaleX,
-      height: det.bbox[3] * scaleY,
+      left: finalX,
+      top: finalY,
+      width: displayW,
+      height: displayH,
     };
   };
 
