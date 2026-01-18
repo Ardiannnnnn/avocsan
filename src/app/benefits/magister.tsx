@@ -20,7 +20,7 @@ export default function MagisterScreen() {
   const insets = useSafeAreaInsets();
 
   const openWebsite = () => {
-    Linking.openURL("https://informatika.usk.ac.id/webinf/?p=4086");
+    Linking.openURL("https://dsai.cs.usk.ac.id/");
   };
 
   const programs = [
